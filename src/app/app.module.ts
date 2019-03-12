@@ -1,18 +1,35 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
+import *  as mat from '@angular/material';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MainNavComponent } from './components/lehrer/main-nav-lehrer/main-nav.component';
+import { MainNavAdminComponent } from './components/admin/main-nav-admin/main-nav-admin.component';
+import { LayoutModule } from '@angular/cdk/layout';
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainNavComponent,
+    MainNavAdminComponent,
+    routingComponents,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    mat.MatSidenavModule,
+    mat.MatToolbarModule,
+    LayoutModule,
+    mat.MatToolbarModule,
+    mat.MatButtonModule,
+    mat.MatSidenavModule,
+    mat.MatIconModule,
+    mat.MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
