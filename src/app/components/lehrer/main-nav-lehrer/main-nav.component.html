@@ -5,9 +5,9 @@
       [opened]="!(isHandset$ | async)">
     <mat-toolbar>Navigation</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/projekteLehrer">Meine Klassen</a>
-      <a mat-list-item routerLink="/profilLehrer">Mein Profil</a>
-      <a mat-list-item routerLink="/settingsLehrer">Settings</a>
+      <a mat-list-item routerLink="/projekteLehrer" routerLinkActive="active-list-item">Meine Klassen</a>
+      <a mat-list-item routerLink="/profilLehrer" routerLinkActive="active-list-item">Mein Profil</a>
+      <a mat-list-item routerLink="/settingsLehrer" routerLinkActive="active-list-item">Settings</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
