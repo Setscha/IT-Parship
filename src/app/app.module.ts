@@ -7,6 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainNavComponent } from './components/lehrer/main-nav-lehrer/main-nav.component';
 import { MainNavAdminComponent } from './components/admin/main-nav-admin/main-nav-admin.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { ComponentsComponent } from './components/components.component';
+import { MainNavSchuelerComponent } from './components/schueler/main-nav-schueler/main-nav-schueler.component';
+
 
 
 
@@ -16,6 +19,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     MainNavComponent,
     MainNavAdminComponent,
     routingComponents,
+    ComponentsComponent,
+    MainNavSchuelerComponent
 
   ],
   imports: [
