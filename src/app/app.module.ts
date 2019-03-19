@@ -7,10 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainNavComponent } from './components/lehrer/main-nav-lehrer/main-nav.component';
 import { MainNavAdminComponent } from './components/admin/main-nav-admin/main-nav-admin.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { ComponentsComponent } from './components/components.component';
 import { MainNavSchuelerComponent } from './components/schueler/main-nav-schueler/main-nav-schueler.component';
-
-
+import { ProjektComponent } from './components/projekt/projekt.component';
 
 
 @NgModule({
@@ -19,9 +17,8 @@ import { MainNavSchuelerComponent } from './components/schueler/main-nav-schuele
     MainNavComponent,
     MainNavAdminComponent,
     routingComponents,
-    ComponentsComponent,
-    MainNavSchuelerComponent
-
+    MainNavSchuelerComponent,
+    ProjektComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +31,8 @@ import { MainNavSchuelerComponent } from './components/schueler/main-nav-schuele
     mat.MatButtonModule,
     mat.MatSidenavModule,
     mat.MatIconModule,
-    mat.MatListModule
+    mat.MatListModule,
+    mat.MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
