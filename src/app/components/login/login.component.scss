@@ -1,26 +1,64 @@
 @import '~@angular/material/theming';
 
-.login-form {
+h1 {
+  font-family: "Viga", sans-serif;
+  //font-weight: bold;
+}
+
+p {
+  margin: 0;
+  margin-left: 12px;
+}
+
+.bg {
+  width: 100%;
+  height: 100vh;
+  background-image: url("../../../assets/xd4.jpg");
+
+  /* Add the blur effect
+  filter: blur(1px);
+  -webkit-filter: blur(1px);*/
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100vh;
   display: flex;
+  justify-content: center;
+  align-items: center;
+
   flex-direction: column;
-  width: 50%;
-  margin-left: 25%;
-  margin-top: 20px;
-  padding: 15px;
-
-  // Adds a shadow for elevation level 2 with default color and full opacity:
-  @include mat-elevation(8);
 }
 
-.login-input-field {
-  width: 50%;
+.microsoftButton {
+  font-family: "Segoe UI", serif;
+  font-size: 15px;
+  height: 41px;
+  vertical-align: center;
+  padding: 0 12px;
+
+  opacity: 1;
+  background-color: #2F2F2F;
+  color: #FFF;
+  border: none;
+
+  cursor: pointer;
+
+  transition: border-radius 0.5s;
 }
 
-.username-input {
-  margin-top: 10px;
+.microsoftButton:hover {
+
+  border-radius: 8px;
+  transition: border-radius 0.5s;
 }
 
-.login-button {
-  margin-top: 20px;
-  width: 100px;
-}
+
+

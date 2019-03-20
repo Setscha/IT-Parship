@@ -1,16 +1,22 @@
-<form class="login-form">
-  <p>Login</p>
+<div class="bg"></div>
 
-  <mat-divider></mat-divider>
+<div class="login">
 
-  <mat-form-field class="login-input-field username-input">
-    <input type="text" matInput placeholder="Username">
+  <h1>IT-Parship</h1>
+
+  <img src="../../../assets/logo.svg" width="200" style="margin-bottom: 25px;">
+
+  <a href="http://IT-Parship.tk/login.php">
+    <button class="microsoftButton">
+      <div style="display:flex; align-items: center;">
+        <img src="../../../assets/ms_icon.png" width="21" height="21">
+        <p>Sign in with Microsoft</p>
+      </div>
+    </button>
+  </a>
+
+  <mat-form-field style="margin-top: 10px;">
+    <input matInput placeholder="Einschreibschlüssel" required>
   </mat-form-field>
 
-  <mat-form-field class="login-input-field">
-    <input type="password" matInput placeholder="Password">
-  </mat-form-field>
-
-  <button class="login-button" mat-raised-button color="primary">Login</button>
-
-</form>
+</div>

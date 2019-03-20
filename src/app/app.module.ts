@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/login/login.component';
 import {MatButtonModule, MatDividerModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {MatButtonModule, MatDividerModule, MatFormFieldModule, MatInputModule} f
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
