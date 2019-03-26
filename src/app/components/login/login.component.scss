@@ -1,8 +1,14 @@
 @import '~@angular/material/theming';
 
 h1 {
-  font-family: "Viga", sans-serif;
+  font-family: "Amaranth", sans-serif;
   //font-weight: bold;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;
+  margin-bottom: 15px;
+  font-size: 50px;
 }
 
 p {
@@ -35,6 +41,14 @@ p {
   align-items: center;
 
   flex-direction: column;
+}
+
+.logo {
+  width: 200px;
+  height: 200px;
+  background: url("../../../assets/logo.svg");
+  background-size: cover;
+  margin-bottom: 10px;
 }
 
 .microsoftButton {
