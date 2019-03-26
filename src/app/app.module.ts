@@ -10,6 +10,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MainNavSchuelerComponent } from './components/schueler/main-nav-schueler/main-nav-schueler.component';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SkillpointsComponent } from './components/skillpoints/skillpoints.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     MainNavAdminComponent,
     routingComponents,
     MainNavSchuelerComponent,
-    LoginComponent
+    LoginComponent,
+    SkillpointsComponent
   ],
   imports: [
     BrowserModule,
