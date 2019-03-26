@@ -9,7 +9,8 @@ import { MainNavAdminComponent } from './components/admin/main-nav-admin/main-na
 import { LayoutModule } from '@angular/cdk/layout';
 import { MainNavSchuelerComponent } from './components/schueler/main-nav-schueler/main-nav-schueler.component';
 import { ProjektComponent } from './components/projekt/projekt.component';
-
+import { LoginComponent } from './components/login/login.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ProjektComponent } from './components/projekt/projekt.component';
     routingComponents,
     MainNavSchuelerComponent,
     ProjektComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +35,11 @@ import { ProjektComponent } from './components/projekt/projekt.component';
     mat.MatIconModule,
     mat.MatListModule,
     mat.MatCardModule
+    mat.MatFormFieldModule,
+    mat.MatInputModule,
+    mat.MatButtonModule,
+    mat.MatDividerModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
