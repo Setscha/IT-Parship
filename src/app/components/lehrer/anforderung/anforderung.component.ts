@@ -8,14 +8,22 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class AnforderungComponent implements OnInit {
 
   @Input()
+  id: number;
+
+  @Input()
   name: string;
 
   @Input()
   prio: number;
 
-  @Output()
-  changeAnforderungOutput = new EventEmitter<String>();
+  @Input()
+  kompetenzPool: any;
 
+  @Output()
+  changeAnforderungOutput = new EventEmitter<any>();
+
+  @Output()
+  deleteAnforderungOutput = new EventEmitter<any>();
 
 
   isDisabled: boolean = true;
@@ -24,9 +32,14 @@ export class AnforderungComponent implements OnInit {
     if (this.isDisabled) {
       this.isDisabled = false;
     } else {
-      this.changeAnforderungOutput.emit(this.name);
+      this.changeAnforderungOutput.emit( {id: this.id, name: this.name, prio: this.prio} );
       this.isDisabled = true;
+      console.log({id: this.id, name: this.name, prio: this.prio});
     }
+  }
+
+  deleteAnforderung = () => {
+    this.deleteAnforderungOutput.emit( {id: this.id, name: this.name, prio: this.prio} );
   }
 
   constructor() { }
@@ -35,4 +48,3 @@ export class AnforderungComponent implements OnInit {
   }
 
 }
-

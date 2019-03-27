@@ -9,10 +9,21 @@
           max. Schüler{{maxSchueler}}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <p>{{description}}</p>
+      <div style="display: flex">
+        <mat-form-field style="width: 60%">
+          <textarea matInput placeholder="Beschreibung" [value]="description" [matTextareaAutosize]="true" [disabled]="desciptionDisabled">
+          </textarea>
+        </mat-form-field>
+        <button mat-icon-button (click)="editDescription()" *ngIf="desciptionDisabled">
+          <mat-icon>create</mat-icon>
+        </button>
+        <button mat-icon-button (click)="saveDescription()" *ngIf="!desciptionDisabled">
+          <mat-icon>check_circle</mat-icon>
+        </button>
+      </div>
 
       <!-- Anforderungen in einem Expansion Panel !-->
-      <mat-expansion-panel style="margin-top: 25px;">
+      <mat-expansion-panel style="">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Anforderungen
@@ -23,8 +34,8 @@
         </mat-expansion-panel-header>
         <mat-list role="list">
           <mat-list-item role="listitem" *ngFor="let a of anforderungen">
-            <app-anforderung style="width: 100%" (changeAnforderungOutput)="changeAnforderung($event)"
-                             [name]="a.name" [prio]="a.prio"></app-anforderung>
+            <app-anforderung style="width: 100%" (changeAnforderungOutput)="changeAnforderung($event)" (deleteAnforderungOutput)="deleteAnforderung($event)"
+                             [id]="a.id" [name]="a.name" [prio]="a.prio" [kompetenzPool]="kompetenzPool"></app-anforderung>
           </mat-list-item>
         </mat-list>
         <button mat-icon-button (click)="addAnforderung()">

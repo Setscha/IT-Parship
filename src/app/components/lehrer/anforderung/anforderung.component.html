@@ -1,6 +1,6 @@
 <div class="listitem">
   <mat-form-field>
-    <mat-select (valueChange)="changeAnforderung()" [disabled]="isDisabled" [value]="name">
+    <mat-select [disabled]="isDisabled" [(value)]="name" (valueChange)="changeAnforderung()" >
       <mat-option *ngFor="let k of kompetenzPool" [value]="k.name">{{k.name}}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -8,8 +8,9 @@
     <button mat-icon-button (click)="changeAnforderung()">
       <mat-icon>create</mat-icon>
     </button>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="deleteAnforderung()">
       <mat-icon>delete</mat-icon>
     </button>
   </div>
 </div>
+

@@ -45,7 +45,8 @@ import { AnforderungComponent } from './components/lehrer/anforderung/anforderun
     mat.MatDividerModule,
     HttpClientModule,
     mat.MatExpansionModule,
-    mat.MatSelectModule
+    mat.MatSelectModule,
+    mat.MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

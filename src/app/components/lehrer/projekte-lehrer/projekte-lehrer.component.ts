@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-projekte-lehrer',
@@ -12,15 +13,24 @@ export class ProjekteLehrerComponent implements OnInit {
       'IT-Parship',
       'Das ist die tolle Deskription von IT-Parhsip: Dem Besten Pojekt der 4BI',
       5,
-      [new Anforderung('Programmieren', 1), new Anforderung('Filmen', 5), new Anforderung('Schneiden', 2)]
+      [new Anforderung(0, 'Programmieren', 1), new Anforderung(1, 'Filmen', 5), new Anforderung(2, 'Schneiden', 2)]
     ],
     [
       'SmartFeedback',
       'Das ist die tolle Deskription von SmartFeedback: Dem zweit Besten Pojekt der 4BI',
       5,
-      [new Anforderung('Programmieren', 1), new Anforderung('Filmen', 5), new Anforderung('Schneiden', 2)]
+      [new Anforderung(0, 'Programmieren', 1), new Anforderung(1, 'Filmen', 5), new Anforderung(2, 'Schneiden', 2)]
     ]
   ];
+
+  editDescription = (p) => {
+    this.projekte.forEach(p1 => {
+      if (p1[0] === p.name) {
+        p1[1] = p.description;
+      }
+    });
+    console.log(this.projekte);
+  }
 
   constructor() { }
 
@@ -30,10 +40,12 @@ export class ProjekteLehrerComponent implements OnInit {
 }
 
 class Anforderung {
+  id: number;
   name: string;
   prio: number;
 
-  constructor(name: string, prio: number) {
+  constructor(id: number, name: string, prio: number) {
+    this.id = id;
     this.name = name;
     this.prio = prio;
   }
