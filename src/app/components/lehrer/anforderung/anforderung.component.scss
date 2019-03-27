@@ -1,0 +1,12 @@
+.listitem {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10px;
+  border-radius: 5px;
+  align-items: center;
+}
+
+.listitem:hover{
+  background-color: #f4f4f4;
+}

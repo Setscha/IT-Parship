@@ -1,0 +1,37 @@
+<div class="projekt">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{name}}
+        </mat-panel-title>
+        <mat-panel-description>
+          max. Schüler{{maxSchueler}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>{{description}}</p>
+
+      <!-- Anforderungen in einem Expansion Panel !-->
+      <mat-expansion-panel style="margin-top: 25px;">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Anforderungen
+          </mat-panel-title>
+          <mat-panel-description>
+            Anzahl: {{anforderungen.length}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-list role="list">
+          <mat-list-item role="listitem" *ngFor="let a of anforderungen">
+            <app-anforderung style="width: 100%" (changeAnforderungOutput)="changeAnforderung($event)"
+                             [name]="a.name" [prio]="a.prio"></app-anforderung>
+          </mat-list-item>
+        </mat-list>
+        <button mat-icon-button (click)="addAnforderung()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-expansion-panel>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

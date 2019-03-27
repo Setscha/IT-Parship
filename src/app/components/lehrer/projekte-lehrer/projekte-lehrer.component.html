@@ -1,1 +1,4 @@
-Hier finden Sie als Lehrer all ihre Projkete
+<div class="projekt-liste">
+  <app-lehrer-projekt class="lehrer-projekt" *ngFor="let p of projekte"
+                      [name]="p[0]" [description]="p[1]" [maxSchueler]="p[2]" [anforderungen]="p[3]"></app-lehrer-projekt>
+</div>

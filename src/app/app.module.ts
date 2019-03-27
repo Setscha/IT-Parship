@@ -10,6 +10,9 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MainNavSchuelerComponent } from './components/schueler/main-nav-schueler/main-nav-schueler.component';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LehrerProjektComponent } from './components/lehrer/lehrer-projekt/lehrer-projekt.component';
+import { ProjektListeComponent } from './components/lehrer/projekt-liste/projekt-liste.component';
+import { AnforderungComponent } from './components/lehrer/anforderung/anforderung.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { HttpClientModule } from '@angular/common/http';
     MainNavAdminComponent,
     routingComponents,
     MainNavSchuelerComponent,
-    LoginComponent
+    LoginComponent,
+    LehrerProjektComponent,
+    ProjektListeComponent,
+    AnforderungComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +43,9 @@ import { HttpClientModule } from '@angular/common/http';
     mat.MatInputModule,
     mat.MatButtonModule,
     mat.MatDividerModule,
-    HttpClientModule
+    HttpClientModule,
+    mat.MatExpansionModule,
+    mat.MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
