@@ -13,6 +13,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { LehrerProjektComponent } from './components/lehrer/lehrer-projekt/lehrer-projekt.component';
 import { ProjektListeComponent } from './components/lehrer/projekt-liste/projekt-liste.component';
 import { AnforderungComponent } from './components/lehrer/anforderung/anforderung.component';
+import {FormsModule} from '@angular/forms';
+import { EditProjektDialogComponent } from './components/lehrer/edit-projekt-dialog/edit-projekt-dialog.component';
+import { DeleteProjektDialogComponent } from './components/lehrer/delete-projekt-dialog/delete-projekt-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { AnforderungComponent } from './components/lehrer/anforderung/anforderun
     LoginComponent,
     LehrerProjektComponent,
     ProjektListeComponent,
-    AnforderungComponent
+    AnforderungComponent,
+    EditProjektDialogComponent,
+    DeleteProjektDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +51,14 @@ import { AnforderungComponent } from './components/lehrer/anforderung/anforderun
     HttpClientModule,
     mat.MatExpansionModule,
     mat.MatSelectModule,
-    mat.MatSnackBarModule
+    mat.MatSnackBarModule,
+    FormsModule,
+    mat.MatDialogModule,
+    mat.MatTooltipModule
+  ],
+  entryComponents: [
+    EditProjektDialogComponent,
+    DeleteProjektDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

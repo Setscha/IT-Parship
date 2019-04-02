@@ -1,5 +1,11 @@
 <div class="projekt-liste">
   <app-lehrer-projekt class="lehrer-projekt" *ngFor="let p of projekte"
-                      [name]="p[0]" [description]="p[1]" [maxSchueler]="p[2]" [anforderungen]="p[3]"
-                      (editDescriptionOutput)="editDescription($event)"></app-lehrer-projekt>
+                      [projekt]="p"
+                      (editProjektOutput)="editProjekt($event)" (deleteProjektOutput)="deleteProjekt($event)">
+  </app-lehrer-projekt>
+  <button mat-icon-button (click)="addProjekt()" class="btn-addprojekt"
+          matTooltip="Projekt Hinzufügen" [matTooltipShowDelay]="1000" matTooltipPosition='right'>
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
+

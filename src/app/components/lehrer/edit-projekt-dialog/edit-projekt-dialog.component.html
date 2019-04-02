@@ -1,0 +1,25 @@
+<h3 matDialogTitle>
+  Projekt {{data.action}}
+</h3>
+
+<mat-dialog-content style="display: flex; flex-direction: column">
+  <div>
+    <mat-form-field style="width: 77%;">
+      <input matInput type="text" placeholder="Projektname" [(ngModel)]="name">
+    </mat-form-field>
+
+    <mat-form-field style="width: 20%; margin-left: 3%">
+      <input matInput type="number" placeholder="max. Schüler" [(ngModel)]="maxSchueler">
+    </mat-form-field>
+  </div>
+
+  <mat-form-field>
+    <textarea matInput placeholder="Pojektbeschreibung" [matTextareaAutosize]="true" [(ngModel)]="description">
+    </textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()">Abbrechen</button>
+  <button mat-raised-button (click)="save()">Speichern</button>
+</mat-dialog-actions>

@@ -1,0 +1,12 @@
+<h3 matDialogTitle>
+  Projekt Löschen
+</h3>
+
+<mat-dialog-content style="display: flex; flex-direction: column">
+  <p>Möchten Sie das Projekt <b>{{name}}</b> wirklich löschen?</p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()">Abbrechen</button>
+  <button mat-raised-button color="warn" (click)="delete ()">Löschen</button>
+</mat-dialog-actions>

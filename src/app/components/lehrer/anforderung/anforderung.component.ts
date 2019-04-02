@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-anforderung',
@@ -8,13 +9,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class AnforderungComponent implements OnInit {
 
   @Input()
-  id: number;
-
-  @Input()
-  name: string;
-
-  @Input()
-  prio: number;
+  anforderung: any;
 
   @Input()
   kompetenzPool: any;
@@ -26,25 +21,55 @@ export class AnforderungComponent implements OnInit {
   deleteAnforderungOutput = new EventEmitter<any>();
 
 
-  isDisabled: boolean = true;
-
   changeAnforderung = () => {
-    if (this.isDisabled) {
-      this.isDisabled = false;
+    if (this.anforderung.isDisabled) {
+      this.anforderung.isDisabled = false;
     } else {
-      this.changeAnforderungOutput.emit( {id: this.id, name: this.name, prio: this.prio} );
-      this.isDisabled = true;
-      console.log({id: this.id, name: this.name, prio: this.prio});
+      this.anforderung.isDisabled = true;
+      this.openSnackBarChange();
     }
   }
 
-  deleteAnforderung = () => {
-    this.deleteAnforderungOutput.emit( {id: this.id, name: this.name, prio: this.prio} );
+  saveAnforderung = () => {
+    if (this.anforderung.name !== '' && this.anforderung.prio !== null) {
+      this.changeAnforderung();
+      console.log({id: this.anforderung.id, name: this.anforderung.name, prio: this.anforderung.prio});
+      this.changeAnforderungOutput.emit( {id: this.anforderung.id, name: this.anforderung.name, prio: this.anforderung.prio, isDisabled: true} );
+    } else {
+      this.openSnackBarError();
+    }
+
   }
 
-  constructor() { }
+  deleteAnforderung = () => {
+    this.deleteAnforderungOutput.emit( {id: this.anforderung.id, name: this.anforderung.name, prio: this.anforderung.prio} );
+    this.openSnackBarDelete();
+  }
+
+  constructor(private snackBar: MatSnackBar) { }
+
+  openSnackBarChange() {
+    this.snackBar.open('Anforderung wurde gespeichert!', 'OK', {
+      duration: 2000,
+    });
+  }
+  openSnackBarError() {
+    this.snackBar.open('Bitte Wählen Sie eine Kompetenz und eine Priorität aus!', 'OK', {
+      duration: 4000,
+    });
+  }
+  openSnackBarDelete() {
+    this.snackBar.open('Anforderung wurde gelöscht!', 'OK', {
+      duration: 2000,
+    });
+  }
 
   ngOnInit() {
-  }
 
+    console.log(this.anforderung.isDisabled);
+
+    if (this.anforderung.name === '') {
+      this.anforderung.isDisabled = false;
+    }
+  }
 }
