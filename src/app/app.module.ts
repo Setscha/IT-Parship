@@ -10,7 +10,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MainNavSchuelerComponent } from './components/schueler/main-nav-schueler/main-nav-schueler.component';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
-import { SkillpointsComponent } from './components/skillpoints/skillpoints.component';
+import { QualifikationComponent } from './components/schueler/qualifikation/qualifikation.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { SkillpointsComponent } from './components/skillpoints/skillpoints.compo
     routingComponents,
     MainNavSchuelerComponent,
     LoginComponent,
-    SkillpointsComponent
+    QualifikationComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +40,9 @@ import { SkillpointsComponent } from './components/skillpoints/skillpoints.compo
     mat.MatInputModule,
     mat.MatButtonModule,
     mat.MatDividerModule,
-    HttpClientModule
+    HttpClientModule,
+    mat.MatSliderModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
