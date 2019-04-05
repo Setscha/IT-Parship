@@ -1,0 +1,16 @@
+<div style="display: flex; align-items: center; justify-content: space-between">
+  <p> {{qualifikation.kompetenz}} </p>
+
+  <mat-slider [(ngModel)]="qualifikation.ausmass"
+          class="example-margin"
+          max="10"
+          min="0"
+          step="1"
+          thumbLabel="true"
+          tickInterval="5">
+  </mat-slider>
+
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Points" type="number" [(ngModel)]="qualifikation.ausmass">
+  </mat-form-field>
+</div>
