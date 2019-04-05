@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import * as mat from '@angular/material';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,6 +15,15 @@ import { AnforderungComponent } from './components/lehrer/anforderung/anforderun
 import {FormsModule} from '@angular/forms';
 import { EditProjektDialogComponent } from './components/lehrer/edit-projekt-dialog/edit-projekt-dialog.component';
 import { DeleteProjektDialogComponent } from './components/lehrer/delete-projekt-dialog/delete-projekt-dialog.component';
+import {
+  MatButtonModule,
+  MatCardModule, MatDialogModule, MatDividerModule, MatExpansionModule, MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule, MatSelectModule,
+  MatSidenavModule, MatSnackBarModule,
+  MatToolbarModule, MatTooltipModule
+} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -35,26 +43,26 @@ import { DeleteProjektDialogComponent } from './components/lehrer/delete-projekt
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    mat.MatSidenavModule,
-    mat.MatToolbarModule,
+    MatSidenavModule,
+    MatToolbarModule,
     LayoutModule,
-    mat.MatToolbarModule,
-    mat.MatButtonModule,
-    mat.MatSidenavModule,
-    mat.MatIconModule,
-    mat.MatListModule,
-    mat.MatCardModule,
-    mat.MatFormFieldModule,
-    mat.MatInputModule,
-    mat.MatButtonModule,
-    mat.MatDividerModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDividerModule,
     HttpClientModule,
-    mat.MatExpansionModule,
-    mat.MatSelectModule,
-    mat.MatSnackBarModule,
+    MatExpansionModule,
+    MatSelectModule,
+    MatSnackBarModule,
     FormsModule,
-    mat.MatDialogModule,
-    mat.MatTooltipModule
+    MatDialogModule,
+    MatTooltipModule
   ],
   entryComponents: [
     EditProjektDialogComponent,

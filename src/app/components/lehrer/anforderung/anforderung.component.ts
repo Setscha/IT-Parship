@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-anforderung',
@@ -20,56 +21,50 @@ export class AnforderungComponent implements OnInit {
   @Output()
   deleteAnforderungOutput = new EventEmitter<any>();
 
+  anforderungForm: FormGroup;
 
   changeAnforderung = () => {
     if (this.anforderung.isDisabled) {
       this.anforderung.isDisabled = false;
-    } else {
-      this.anforderung.isDisabled = true;
-      this.openSnackBarChange();
     }
   }
 
   saveAnforderung = () => {
-    if (this.anforderung.name !== '' && this.anforderung.prio !== null) {
+    if (this.anforderung.name !== '' && this.anforderung.prio !== null && this.anforderung.prio > 0) {
       this.changeAnforderung();
       console.log({id: this.anforderung.id, name: this.anforderung.name, prio: this.anforderung.prio});
-      this.changeAnforderungOutput.emit( {id: this.anforderung.id, name: this.anforderung.name, prio: this.anforderung.prio, isDisabled: true} );
-    } else {
-      this.openSnackBarError();
+      this.anforderung.isDisabled = true;
+      this.changeAnforderungOutput.emit({
+        id: this.anforderung.id,
+        name: this.anforderung.name,
+        prio: this.anforderung.prio,
+        isDisabled: true
+      });
+      this.openSnackBar('Anforderung wurde gespeichert!', 'OK', 2000);
     }
-
   }
 
   deleteAnforderung = () => {
-    this.deleteAnforderungOutput.emit( {id: this.anforderung.id, name: this.anforderung.name, prio: this.anforderung.prio} );
-    this.openSnackBarDelete();
+    if (this.anforderung.name !== '') {
+      this.deleteAnforderungOutput.emit({id: this.anforderung.id, name: this.anforderung.name, prio: this.anforderung.prio});
+      this.openSnackBar('Anforderung wurde gelöscht!', 'OK', 2000);
+    }
   }
 
   constructor(private snackBar: MatSnackBar) { }
 
-  openSnackBarChange() {
-    this.snackBar.open('Anforderung wurde gespeichert!', 'OK', {
-      duration: 2000,
-    });
-  }
-  openSnackBarError() {
-    this.snackBar.open('Bitte Wählen Sie eine Kompetenz und eine Priorität aus!', 'OK', {
-      duration: 4000,
-    });
-  }
-  openSnackBarDelete() {
-    this.snackBar.open('Anforderung wurde gelöscht!', 'OK', {
-      duration: 2000,
+  openSnackBar(message: string, action: string, duration: number) {
+    this.snackBar.open(message, action, {
+      duration: duration
     });
   }
 
   ngOnInit() {
 
-    console.log(this.anforderung.isDisabled);
-
-    if (this.anforderung.name === '') {
-      this.anforderung.isDisabled = false;
-    }
+    this.anforderungForm = new FormGroup({
+      'prior': new FormControl(this.anforderung.prio, [
+        Validators.required,
+      ])
+    });
   }
 }

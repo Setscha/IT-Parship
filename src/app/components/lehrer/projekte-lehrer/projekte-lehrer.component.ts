@@ -43,7 +43,7 @@ export class ProjekteLehrerComponent implements OnInit {
           this.projekte.push(new Projekt(this.projekte[this.projekte.length - 1].id + 1, result.name, result.description, result.maxSchueler, []));
         }
       } else {
-        this.projekte.splice(this.projekte.length - 1, 1);
+        //this.projekte.splice(this.projekte.length - 1, 1);
       }
     });
   }

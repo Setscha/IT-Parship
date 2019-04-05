@@ -19,6 +19,8 @@ export class LehrerProjektComponent implements OnInit {
   @Output()
   deleteProjektOutput = new EventEmitter<any>();
 
+  nAnforderungen: number;
+
   /**
    * Da muss man von der Datenbank alle Kompetenzen eineballern
    * NOCHT NICHT !!! kompetenzPool wird in Oninit Methode gefiltert, dass nur Kompetenzen im Anforderung-Select ausgwählt werden können, die noch keine Anforderung sind
@@ -61,14 +63,14 @@ export class LehrerProjektComponent implements OnInit {
   }
 
   addAnforderung = () => {
-    const nAnforderungen = this.projekt.anforderungen.length;
-    if (nAnforderungen === 0) {
+    const anforerungenLength = this.projekt.anforderungen.length;
+    if (anforerungenLength === 0) {
       this.projekt.anforderungen.push(new Anforderung(0, '', null, false));
       return;
     }
-    if (this.projekt.anforderungen[nAnforderungen - 1].name !== '') {
-      this.projekt.anforderungen.push(new Anforderung(this.projekt.anforderungen[nAnforderungen - 1].id + 1, '', null, false));
-      console.log(this.projekt.anforderungen[nAnforderungen - 1]);
+    if (this.projekt.anforderungen[anforerungenLength - 1].name !== '') {
+      this.projekt.anforderungen.push(new Anforderung(this.projekt.anforderungen[anforerungenLength - 1].id + 1, '', null, false));
+      console.log(this.projekt.anforderungen[anforerungenLength - 1]);
     }
   }
 
@@ -87,6 +89,9 @@ export class LehrerProjektComponent implements OnInit {
 
   deleteAnforderung = (a) => {
     this.projekt.anforderungen = this.projekt.anforderungen.filter(x => x.id !== a.id);
+    if (this.projekt.anforderungen.length === 0) {
+      this.addAnforderung();
+    }
   }
 
   constructor(private snackBar: MatSnackBar, public dialog: MatDialog) { }
@@ -123,6 +128,13 @@ export class LehrerProjektComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.nAnforderungen = this.projekt.anforderungen.length;
+
+    if (this.nAnforderungen === 0) {
+      this.addAnforderung();
+    }
+
   }
 
 }

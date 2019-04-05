@@ -1,12 +1,22 @@
-<div class="listitem">
+<div class="listitem" (dblclick)="changeAnforderung()">
   <div>
     <mat-form-field>
-      <mat-select [disabled]="anforderung.isDisabled" [(value)]="anforderung.name" placeholder="Kompetenz">
+      <mat-select id="kompetenz" name="kompetenz" [disabled]="anforderung.isDisabled"
+                  placeholder="Kompetenz" [(ngModel)]="anforderung.name" #kompetenz='ngModel' required>
         <mat-option *ngFor="let k of kompetenzPool" [value]="k.name">{{k.name}}</mat-option>
       </mat-select>
+
+      <mat-error *ngIf="kompetenz.invalid && (kompetenz.dirty || kompetenz.touched)"
+                 class="alert alert-danger">
+        <div *ngIf="kompetenz.errors.required">
+          Kompetenz wird benötigt.
+        </div>
+      </mat-error>
     </mat-form-field>
-    <mat-form-field style="width: 23%; margin-left: 20px">
-      <input matInput placeholder="Priorität" type="number" [(ngModel)]="anforderung.prio" [disabled]="anforderung.isDisabled">
+
+    <mat-form-field style="width: 35%; margin-left: 20px;">
+      <input matInput id="prior" name="prior" required pattern="[1-9]+" placeholder="Priorität" type="number"
+             [(ngModel)]="anforderung.prio" [disabled]="anforderung.isDisabled" #prior="ngModel">
     </mat-form-field>
   </div>
   <div>

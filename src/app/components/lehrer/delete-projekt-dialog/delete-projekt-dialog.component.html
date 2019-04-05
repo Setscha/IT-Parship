@@ -6,7 +6,9 @@
   <p>Möchten Sie das Projekt <b>{{name}}</b> wirklich löschen?</p>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-button (click)="dialogRef.close()">Abbrechen</button>
-  <button mat-raised-button color="warn" (click)="delete ()">Löschen</button>
+<mat-dialog-actions style="display: flex; justify-content: space-around">
+  <div>
+    <button mat-button (click)="dialogRef.close()">Abbrechen</button>
+    <button mat-raised-button color="warn" (click)="delete ()">Löschen</button>
+  </div>
 </mat-dialog-actions>
