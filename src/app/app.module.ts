@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import * as mat from '@angular/material';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,8 +9,19 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MainNavSchuelerComponent } from './components/schueler/main-nav-schueler/main-nav-schueler.component';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import {
+  MatCardModule,
+  MatDividerModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatSidenavModule,
+  MatToolbarModule,
+  MatButtonModule,
+  MatFormFieldModule
+} from '@angular/material';
 import { QualifikationComponent } from './components/schueler/qualifikation/qualifikation.component';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,22 +37,17 @@ import {FormsModule} from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    mat.MatSidenavModule,
-    mat.MatToolbarModule,
+    MatToolbarModule,
     LayoutModule,
-    mat.MatToolbarModule,
-    mat.MatButtonModule,
-    mat.MatSidenavModule,
-    mat.MatIconModule,
-    mat.MatListModule,
-    mat.MatCardModule,
-    mat.MatFormFieldModule,
-    mat.MatInputModule,
-    mat.MatButtonModule,
-    mat.MatDividerModule,
-    HttpClientModule,
-    mat.MatSliderModule,
-    FormsModule
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDividerModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
