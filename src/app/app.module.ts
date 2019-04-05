@@ -16,10 +16,12 @@ import {
   MatInputModule,
   MatListModule,
   MatSidenavModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatButtonModule,
+  MatFormFieldModule
 } from '@angular/material';
-import {MatButtonModule} from '@angular/material/typings/button';
-import {MatFormFieldModule} from '@angular/material/typings/esm5/form-field';
+import { QualifikationComponent } from './components/schueler/qualifikation/qualifikation.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import {MatFormFieldModule} from '@angular/material/typings/esm5/form-field';
     MainNavAdminComponent,
     routingComponents,
     MainNavSchuelerComponent,
-    LoginComponent
+    LoginComponent,
+    QualifikationComponent
   ],
   imports: [
     BrowserModule,
