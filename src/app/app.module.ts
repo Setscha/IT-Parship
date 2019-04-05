@@ -18,7 +18,8 @@ import {
   MatSidenavModule,
   MatToolbarModule,
   MatButtonModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatSliderModule
 } from '@angular/material';
 import { QualifikationComponent } from './components/schueler/qualifikation/qualifikation.component';
 import { FormsModule } from '@angular/forms';
@@ -47,6 +48,8 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     MatDividerModule,
+    FormsModule,
+    MatSliderModule,
     HttpClientModule
   ],
   providers: [],
