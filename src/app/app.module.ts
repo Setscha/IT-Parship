@@ -12,18 +12,28 @@ import { HttpClientModule } from '@angular/common/http';
 import { LehrerProjektComponent } from './components/lehrer/lehrer-projekt/lehrer-projekt.component';
 import { ProjektListeComponent } from './components/lehrer/projekt-liste/projekt-liste.component';
 import { AnforderungComponent } from './components/lehrer/anforderung/anforderung.component';
-import {FormsModule} from '@angular/forms';
 import { EditProjektDialogComponent } from './components/lehrer/edit-projekt-dialog/edit-projekt-dialog.component';
 import { DeleteProjektDialogComponent } from './components/lehrer/delete-projekt-dialog/delete-projekt-dialog.component';
 import {
-  MatButtonModule,
-  MatCardModule, MatDialogModule, MatDividerModule, MatExpansionModule, MatFormFieldModule,
+  MatCardModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatExpansionModule,
   MatIconModule,
   MatInputModule,
-  MatListModule, MatSelectModule,
-  MatSidenavModule, MatSnackBarModule,
-  MatToolbarModule, MatTooltipModule
+  MatListModule,
+  MatSidenavModule,
+  MatToolbarModule,
+  MatButtonModule,
+  MatTooltipModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatSnackBarModule,
+  MatSliderModule
 } from '@angular/material';
+import { QualifikationComponent } from './components/schueler/qualifikation/qualifikation.component';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -37,7 +47,8 @@ import {
     ProjektListeComponent,
     AnforderungComponent,
     EditProjektDialogComponent,
-    DeleteProjektDialogComponent
+    DeleteProjektDialogComponent,
+    QualifikationComponent
   ],
   imports: [
     BrowserModule,
@@ -46,15 +57,12 @@ import {
     MatSidenavModule,
     MatToolbarModule,
     LayoutModule,
-    MatToolbarModule,
     MatButtonModule,
-    MatSidenavModule,
     MatIconModule,
     MatListModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatDividerModule,
     HttpClientModule,
     MatExpansionModule,
@@ -66,7 +74,11 @@ import {
   ],
   entryComponents: [
     EditProjektDialogComponent,
-    DeleteProjektDialogComponent
+    DeleteProjektDialogComponent,
+    MatDividerModule,
+    FormsModule,
+    MatSliderModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
