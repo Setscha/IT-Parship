@@ -22,6 +22,22 @@ public class Qualifikation extends Persistent {
         return ausmass;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Kompetenz getKompetenz() {
+        return kompetenz;
+    }
+
+    public void setKompetenz(Kompetenz kompetenz) {
+        this.kompetenz = kompetenz;
+    }
+
     public void setAusmass(int ausmass) {
         this.ausmass = ausmass;
     }

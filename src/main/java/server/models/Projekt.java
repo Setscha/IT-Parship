@@ -6,12 +6,9 @@ import java.util.Set;
 
 @Entity
 public class Projekt extends Persistent {
-    private Number id;
     private String name;
     private String beschreibung;
     private Number maxSchueler;
-
-
 
     @OneToMany(mappedBy = "projekt")
     private Set<Person> personas;
