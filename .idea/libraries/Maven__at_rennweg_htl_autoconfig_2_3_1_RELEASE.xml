@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: at.rennweg.htl:autoconfig:2.3.1-RELEASE">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/at/rennweg/htl/autoconfig/2.3.1-RELEASE/autoconfig-2.3.1-RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/at/rennweg/htl/autoconfig/2.3.1-RELEASE/autoconfig-2.3.1-RELEASE-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/at/rennweg/htl/autoconfig/2.3.1-RELEASE/autoconfig-2.3.1-RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
