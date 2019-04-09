@@ -1,3 +1,14 @@
- <p>
-  kompetenzen-schueler works!
-</p>
+<mat-card style='width: 80%; margin-left: 10%; margin-top: 20px'>
+
+  <mat-card-header>
+    <mat-card-title>Stefan Kristajc</mat-card-title>
+    <mat-card-subtitle>Kompetenzen</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-list>
+    <mat-list-item *ngFor="let q of qualifikationen" >
+      <app-qualifikation [qualifikation]="q" style="width: 100%;"></app-qualifikation>
+    </mat-list-item>
+  </mat-list>
+
+</mat-card>
