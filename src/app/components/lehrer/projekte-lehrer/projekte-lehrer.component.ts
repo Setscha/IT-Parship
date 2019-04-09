@@ -40,7 +40,11 @@ export class ProjekteLehrerComponent implements OnInit {
       console.log(result);
       if (typeof result !== 'undefined') {
         if (result.name !== undefined || result.description !== undefined || result.maxSchueler !== undefined) {
-          this.projekte.push(new Projekt(this.projekte[this.projekte.length - 1].id + 1, result.name, result.description, result.maxSchueler, []));
+          if (this.projekte.length === 0) {
+            this.projekte.push(new Projekt(0, result.name, result.description, result.maxSchueler, []));
+          } else {
+            this.projekte.push(new Projekt(this.projekte[this.projekte.length - 1].id + 1, result.name, result.description, result.maxSchueler, []));
+          }
         }
       } else {
         //this.projekte.splice(this.projekte.length - 1, 1);

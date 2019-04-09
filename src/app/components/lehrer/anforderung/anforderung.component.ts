@@ -45,7 +45,7 @@ export class AnforderungComponent implements OnInit {
   }
 
   deleteAnforderung = () => {
-    if (this.anforderung.name !== '') {
+    if ((this.anforderung.name !== '' && this.anforderung.prio > 0 ) || this.anforderung.id !== 0) {
       this.deleteAnforderungOutput.emit({id: this.anforderung.id, name: this.anforderung.name, prio: this.anforderung.prio});
       this.openSnackBar('Anforderung wurde gelöscht!', 'OK', 2000);
     }
