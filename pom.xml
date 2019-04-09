@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>vorlage</artifactId>
+	<version>2.2.0-RELEASE</version>
+	<packaging>jar</packaging>
+
+	<name>Vorlage</name>
+	<description>Spring Boot-Projektvorlage SEW MEDT 2018/19</description>
+
+	<parent>
+		<groupId>at.rennweg.htl</groupId>
+		<artifactId>spring-boot</artifactId>
+		<version>1.2.0-RELEASE</version>
+		<relativePath/>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>at.rennweg.htl</groupId>
+			<artifactId>autoconfig</artifactId>
+			<version>2.3.1-RELEASE</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- Erzeugt ein direkt in Linux ausführbares JAR -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+    <repositories>
+        <repository>
+            <id>sew-medt</id>
+            <url>https://raw.githubusercontent.com/undecaf/sew-medt/master</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+</project>

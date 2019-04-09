@@ -1,0 +1,50 @@
+<div class="projekt">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{projekt.name}}
+        </mat-panel-title>
+        <mat-panel-description>
+          max. Schüler {{projekt.maxSchueler}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div style="display: flex; justify-content: space-between">
+        <p style="max-width: 80%">{{projekt.beschreibung}}
+        </p>
+        <div>
+          <button mat-icon-button (click)="editProjekt()"
+                  matTooltip="Bearbeiten" [matTooltipShowDelay]="1000" matTooltipPosition="above">
+            <mat-icon>create</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteProjekt()"
+                  matTooltip="Löschen" [matTooltipShowDelay]="1000" matTooltipPosition="above">
+            <mat-icon color="warn">delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Anforderungen in einem Expansion Panel !-->
+      <mat-expansion-panel style="">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Anforderungen
+          </mat-panel-title>
+          <mat-panel-description>
+            Anzahl: {{projekt.anforderungen.length}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-list role="list">
+          <mat-list-item role="listitem" *ngFor="let a of projekt.anforderungen" style="margin-top: 20px;">
+            <app-anforderung style="width: 100%" (changeAnforderungOutput)="changeAnforderung($event)" (deleteAnforderungOutput)="deleteAnforderung($event)"
+                             [anforderung]="a" [kompetenzPool]="kompetenzPool"></app-anforderung>
+          </mat-list-item>
+        </mat-list>
+        <button mat-icon-button (click)="addAnforderung()" style="margin-top: 10px"
+                matTooltip="Anforderung Hinzufügen" [matTooltipShowDelay]="1000" matTooltipPosition='right'>
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-expansion-panel>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

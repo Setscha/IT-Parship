@@ -1,0 +1,37 @@
+<div class="listitem" (dblclick)="changeAnforderung()">
+  <div>
+    <mat-form-field>
+      <mat-select id="kompetenz" name="kompetenz" [disabled]="anforderung.isDisabled"
+                  placeholder="Kompetenz" [(ngModel)]="anforderung.name" #kompetenz='ngModel' required>
+        <mat-option *ngFor="let k of kompetenzPool" [value]="k.name">{{k.name}}</mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="kompetenz.invalid && (kompetenz.dirty || kompetenz.touched)"
+                 class="alert alert-danger">
+        <div *ngIf="kompetenz.errors.required">
+          Kompetenz wird benötigt.
+        </div>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 35%; margin-left: 20px;">
+      <input matInput id="prior" name="prior" required pattern="[1-9]+" placeholder="Priorität" type="number"
+             [(ngModel)]="anforderung.prio" [disabled]="anforderung.isDisabled" #prior="ngModel">
+    </mat-form-field>
+  </div>
+  <div>
+    <button mat-icon-button (click)="changeAnforderung()" *ngIf="anforderung.isDisabled"
+            matTooltip="Bearbeiten" [matTooltipShowDelay]="1000" matTooltipPosition="above">
+      <mat-icon>create</mat-icon>
+    </button>
+    <button mat-icon-button (click)="saveAnforderung()" *ngIf="!anforderung.isDisabled"
+            matTooltip="Speichern" [matTooltipShowDelay]="1000" matTooltipPosition="above">
+      <mat-icon>check_circle</mat-icon>
+    </button>
+    <button mat-icon-button (click)="deleteAnforderung()"
+            matTooltip="Löschen" [matTooltipShowDelay]="1000" matTooltipPosition="above">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>
+
