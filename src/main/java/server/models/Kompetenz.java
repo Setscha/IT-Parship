@@ -13,6 +13,14 @@ public class Kompetenz extends Persistent {
     @OneToMany(mappedBy = "kompetenz")
     private Set<Qualifikation> qualifikationen;
 
+    public Set<Qualifikation> getQualifikationen() {
+        return qualifikationen;
+    }
+
+    public void setQualifikationen(Set<Qualifikation> qualifikationen) {
+        this.qualifikationen = qualifikationen;
+    }
+
     public String getBeschreibung() {
         return beschreibung;
     }

@@ -6,7 +6,6 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Anforderung extends Persistent {
-    private Number id;
     private int ausmass;
 
     @ManyToOne
@@ -21,5 +20,12 @@ public class Anforderung extends Persistent {
         this.ausmass = ausmass;
     }
 
+    public Projekt getProjekt() {
+        return projekt;
+    }
+
+    public void setProjekt(Projekt projekt) {
+        this.projekt = projekt;
+    }
 
 }
