@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {RestService} from "../../../services/rest.service";
+import {Person} from "../../../models/person";
 
 @Component({
   selector: 'app-projekte-schueler',
@@ -22,9 +24,17 @@ export class ProjekteSchuelerComponent implements OnInit {
           5)
   ];
 
-  constructor() { }
+  constructor(private rest: RestService) { }
 
   ngOnInit() {
+    this.rest.laden(Person, 'http://localhost:8081/api/personen/1', undefined)
+      .subscribe(data => {
+        console.log(data);
+      });
+    this.rest.laden(Projekt, 'http://localhost:8081/api/projekte/1', undefined)
+      .subscribe(data => {
+        console.log(data);
+      });
   }
 
 }
