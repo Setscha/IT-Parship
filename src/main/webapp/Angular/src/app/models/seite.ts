@@ -1,21 +1,9 @@
 export class Seite {
 
-  private properties = {
-    page: {},
-    entities: [],
-
-    vorige: undefined,
-    naechste: undefined,
-    erste: undefined,
-    letzte: undefined,
-    istErste: undefined,
-    istLetzte: undefined,
-  };
-
-  constructor(konstruktor, data) {
+   constructor(konstruktor, data) {
 
     // Daten den Properties zuweisen
-    Object.assign(this, this.properties, data);
+    Object.assign(this, data);
 
     // Anonyme Objekte in Entities umwandeln
     this['entities'] = data[konstruktor.path]
@@ -28,11 +16,11 @@ export class Seite {
     // Hilfsvariable erzeugen
     this['vorige'] = this['page']['number'] - 1;
     this['naechste']= this['page']['number'] + 1;
-    this['erste']= 0;
-    this['letzte']= this['page']['totalPages']-1;
+    this['erste'] = 0;
+    this['letzte'] = this['page']['totalPages']-1;
 
     this['istErste'] = this['page']['number'] <= this['erste'];
-    this['istLetzte']= this['page']['number'] >= this['letzte'];
+    this['istLetzte'] = this['page']['number'] >= this['letzte'];
 
     // Properties schreibschützen
     //Object.keys(properties).forEach(k => Object.defineProperty(this, k, {writable: false}));

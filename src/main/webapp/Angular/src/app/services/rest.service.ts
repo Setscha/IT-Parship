@@ -12,7 +12,7 @@ import {of} from "rxjs/index";
 })
 export class RestService {
 
-  API_PFAD = "api/";
+  API_PFAD = "http://localhost:8081/api/";
 
   constructor(private http: HttpClient,
               private snackbar: MatSnackBar) { }
@@ -47,22 +47,23 @@ export class RestService {
       .get(pfad, { params: params })
       .toPromise()
       .then(response => {
+        response = this.embeddedAufloesen(response);
         //$log.debug("RestService.seiteLaden() OK", response);
         // Seitennummer im zulässigen Bereich, oder keine Seiten?
-        if (response['data']['page']['number'] < response['data']['page']['totalPages'] || !response['data']['page']['totalElements']) {
+        if (response['page']['number'] < response['page']['totalPages'] || !response['page']['totalElements']) {
           // OK, Seite erzeugen und zurückgeben
-          return new Seite(konstruktor, response['data']);
+          return new Seite(konstruktor, response);
 
         } else {
           // Letzte vorhandene Seite ausliefern
           return this.seiteLaden(
             konstruktor,
-            response['data']['page']['totalPages']-1,
+            response['page']['totalPages']-1,
             params,
             query);
         }
       })
-      .catch(this.fehlerBehandeln);
+      .catch(error => this.fehlerBehandeln(error));
   };
 
   /**
