@@ -1,7 +1,10 @@
-<div class="container" *ngIf="projekte | async as projects">
+<div class="container" *ngIf="projekte | async as projects; else loading">
   <mat-card *ngFor="let projekt of projects['entities']" class="mat-elevation-z3">
     <mat-card-title>{{projekt.name}}</mat-card-title>
     <mat-card-subtitle>{{projekt.max_schueler}} Schüler</mat-card-subtitle>
     <mat-card-content>{{projekt.beschreibung}}</mat-card-content>
   </mat-card>
 </div>
+<ng-template #loading >
+  <mat-spinner style="margin:15px auto;"></mat-spinner>
+</ng-template>

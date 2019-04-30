@@ -12,8 +12,11 @@ public class Projekt extends Persistent {
     private String beschreibung;
     private Integer maxSchueler;
 
-    /*@OneToMany(mappedBy = "projekt")
-    private Set<Person> personas;*/
+    @OneToMany(mappedBy = "projekt")
+    private Set<Person> personas;
+
+    @OneToMany(mappedBy = "projekt")
+    private Set<Anforderung> anforderungen;
 
     public String getName() {
         return name;
@@ -39,11 +42,19 @@ public class Projekt extends Persistent {
         this.maxSchueler = maxSchueler;
     }
 
-   /* public Set<Person> getPersonas() {
+    public Set<Person> getPersonas() {
         return personas;
     }
 
     public void setPersonas(Set<Person> personas) {
         this.personas = personas;
-    }*/
+    }
+
+    public Set<Anforderung> getAnforderungen() {
+        return anforderungen;
+    }
+
+    public void setAnforderungen(Set<Anforderung> anforderungen) {
+        this.anforderungen = anforderungen;
+    }
 }

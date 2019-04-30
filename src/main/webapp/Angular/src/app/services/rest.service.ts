@@ -4,8 +4,8 @@ import { MatSnackBar } from "@angular/material";
 import { Seite } from "../models/seite";
 import { isArray } from "rxjs/internal/util/isArray";
 import { isObject } from "rxjs/internal/util/isObject";
-import {catchError, map} from "rxjs/internal/operators";
-import {of} from "rxjs/index";
+import { catchError, map } from "rxjs/internal/operators";
+import { of } from "rxjs/index";
 
 @Injectable({
   providedIn: 'root'
@@ -45,25 +45,26 @@ export class RestService {
 
     return this.http
       .get(pfad, { params: params })
-      .toPromise()
-      .then(response => {
-        response = this.embeddedAufloesen(response);
-        //$log.debug("RestService.seiteLaden() OK", response);
-        // Seitennummer im zulässigen Bereich, oder keine Seiten?
-        if (response['page']['number'] < response['page']['totalPages'] || !response['page']['totalElements']) {
-          // OK, Seite erzeugen und zurückgeben
-          return new Seite(konstruktor, response);
+      .pipe(
+        catchError(error => this.fehlerBehandeln(error)),
+        map(response => {
+          response = this.embeddedAufloesen(response);
+          console.log(response);
+          //$log.debug("RestService.seiteLaden() OK", response);
+          // Seitennummer im zulässigen Bereich, oder keine Seiten?
+          if (response['page']['number'] < response['page']['totalPages'] || !response['page']['totalElements']) {
+            // OK, Seite erzeugen und zurückgeben
+            return new Seite(konstruktor, response);
 
-        } else {
-          // Letzte vorhandene Seite ausliefern
-          return this.seiteLaden(
-            konstruktor,
-            response['page']['totalPages']-1,
-            params,
-            query);
-        }
-      })
-      .catch(error => this.fehlerBehandeln(error));
+          } else {
+            // Letzte vorhandene Seite ausliefern
+            return this.seiteLaden(
+              konstruktor,
+              response['page']['totalPages']-1,
+              params,
+              query);
+          }
+      }));
   };
 
   /**
@@ -162,7 +163,7 @@ export class RestService {
    * zurückgewiesenes Promise.
    */
   fehlerBehandeln(response) {
-    this.snackbar.open(`Fehler ${response.status}`);
+    this.snackbar.open(`Fehler: ${response.statusText}`, null, {duration: 2000});
     console.error(response);
     return of({});
   }
@@ -174,17 +175,20 @@ export class RestService {
   embeddedAufloesen(obj) {
     let embedded;
 
+    if(this === undefined)
+      return;
+
     if (isArray(obj)) {
       // Arrayelemente umstrukturieren
       obj.forEach(this.embeddedAufloesen);
 
-    } else if (isObject(obj) && (embedded = obj._embedded)) {
+    } else if (isObject(obj) && (embedded = obj['_embedded'])) {
       // Inhalte von _embedded in diesem Objekt platzieren
       Object.keys(embedded).forEach(k => {
         obj[k] = embedded[k];
         this.embeddedAufloesen(obj[k]);
       });
-      delete obj._embedded;
+      delete obj['_embedded'];
     }
 
     return obj;
@@ -202,9 +206,9 @@ export class RestService {
     } else if (isObject(obj)) {
       // Verlinkte Objekte suchen und durch ihre self-Links ersetzen
       Object.keys(obj).forEach(k => {
-        if (obj[k] && obj[k]._links && obj[k]._links.self) {
+        if (obj[k] && obj[k]['_links'] && obj[k]['_links']['self']) {
           // Templates aus Link entfernen
-          obj[k] = obj[k]._links.self.href.replace(/\{.*\}$/, "");
+          obj[k] = obj[k]['_link']['self']['href'].replace(/\{.*\}$/, "");
         }
       });
     }

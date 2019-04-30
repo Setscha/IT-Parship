@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from "../../../services/rest.service";
 import { Projekt } from "../../../models/projekt";
-import { Person } from "../../../models/person";
 
 @Component({
   selector: 'app-projekte-schueler',

@@ -12,6 +12,9 @@ public class Anforderung extends Persistent {
     @JoinColumn(name="qualifikationen")
     private Projekt projekt;
 
+    @ManyToOne
+    private Kompetenz kompetenz;
+
     public int getAusmass() {
         return ausmass;
     }
@@ -28,4 +31,11 @@ public class Anforderung extends Persistent {
         this.projekt = projekt;
     }
 
+    public Kompetenz getKompetenz() {
+        return kompetenz;
+    }
+
+    public void setKompetenz(Kompetenz kompetenz) {
+        this.kompetenz = kompetenz;
+    }
 }
