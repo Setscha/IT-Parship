@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RestService } from "../../../services/rest.service";
+import { Projekt } from "../../../models/projekt";
 
 @Component({
   selector: 'app-projekte-schueler',
@@ -7,37 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjekteSchuelerComponent implements OnInit {
 
-  projekte = [
-      new Projekt(
-        'IT-Parship',
-        'Das ist die tolle Deskription von IT-Parship: Dem besten Pojekt der 4BI',
-        5),
-      new Projekt(
-          'SmartFeedback',
-          'Das ist die tolle Deskription von SmartFeedback: Dem zweit Besten Pojekt der 4BI',
-          5),
-      new Projekt(
-          'Kekoklicker',
-          'Das schlechteste Projekt von allen',
-          5)
-  ];
+  projekte;
 
-  constructor() { }
+  constructor(private rest: RestService) { }
 
   ngOnInit() {
-  }
-
-}
-
-class Projekt {
-  public title: string;
-  public description: string;
-  public students: number;
-
-  constructor(title, descr, students) {
-    this.title = title;
-    this.description = descr;
-    this.students = students;
+    this.projekte = this.rest.seiteLaden(
+      Projekt,
+      0,
+      undefined,
+      undefined
+    );
   }
 
 }

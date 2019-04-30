@@ -29,10 +29,11 @@ import {
   MatFormFieldModule,
   MatSelectModule,
   MatSnackBarModule,
-  MatSliderModule
+  MatSliderModule, MatProgressSpinnerModule
 } from '@angular/material';
 import { QualifikationComponent } from './components/schueler/qualifikation/qualifikation.component';
 import { FormsModule } from '@angular/forms';
+import { CookieService } from "ngx-cookie-service";
 
 
 @NgModule({
@@ -71,13 +72,14 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     MatSliderModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     EditProjektDialogComponent,
     DeleteProjektDialogComponent
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

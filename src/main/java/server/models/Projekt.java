@@ -1,20 +1,22 @@
 package server.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
 @Entity
 public class Projekt extends Persistent {
-    private Number id;
     private String name;
+    @Column(columnDefinition="varchar(800)")
     private String beschreibung;
-    private Number maxSchueler;
-
-
+    private Integer maxSchueler;
 
     @OneToMany(mappedBy = "projekt")
     private Set<Person> personas;
+
+    @OneToMany(mappedBy = "projekt")
+    private Set<Anforderung> anforderungen;
 
     public String getName() {
         return name;
@@ -36,7 +38,23 @@ public class Projekt extends Persistent {
         return maxSchueler;
     }
 
-    public void setMaxSchueler(Number maxSchueler) {
+    public void setMaxSchueler(Integer maxSchueler) {
         this.maxSchueler = maxSchueler;
+    }
+
+    public Set<Person> getPersonas() {
+        return personas;
+    }
+
+    public void setPersonas(Set<Person> personas) {
+        this.personas = personas;
+    }
+
+    public Set<Anforderung> getAnforderungen() {
+        return anforderungen;
+    }
+
+    public void setAnforderungen(Set<Anforderung> anforderungen) {
+        this.anforderungen = anforderungen;
     }
 }
