@@ -84,6 +84,7 @@ export class RestService {
       .pipe(
         catchError(error => this.fehlerBehandeln(error)),
         map(data => {
+          data = this.embeddedAufloesen(data);
           return new konstruktor(data);
         })
       );
@@ -99,16 +100,15 @@ export class RestService {
     //$log.debug("RestService.loeschen()", entity);
 
     // Stammt die Entity vom Server, oder wurde sie lokal erzeugt?
-    if (entity._links && entity._links.self) {
+    if (entity['_links'] && entity['_links']['self']) {
       return this.http
-        .delete(entity._links.self.href, { headers: { "If-Match": entity.etag } })
-        .toPromise()
-        .catch(this.fehlerBehandeln);
+        .delete(entity['_links']['self']['href'], { headers: { "If-Match": entity['etag'] } })
+        .pipe(catchError(error => this.fehlerBehandeln(error)));
 
     } else {
       // Entity stammt nicht vom Server und kann dort nicht gelöscht werden
       this.fehlerBehandeln({ status: 404, statusText: "Not found", data: {} });
-      return Promise.reject();
+      return false;
     }
   };
 
@@ -130,15 +130,16 @@ export class RestService {
         .patch(
           entity['_links']['self']['href'],
           entity,
-          { headers: { "If-Match": entity.etag } })
-        .toPromise()
-        .then(response => {
+          { headers: { "If-Match": entity['etag'] } })
+        .pipe(
+          catchError(error => this.fehlerBehandeln(error)),
+          map(response => {
           //$log.debug("RestService.speichern(): update OK", response);
 
           // Aktualisierten Satz in eine Entity umwandeln
           return new entity.constructor(response);
-        })
-        .catch(this.fehlerBehandeln);
+          })
+        );
 
     } else {
       // Entity wurde noch nie auf dem Server gespeichert, erzeugen
@@ -146,14 +147,15 @@ export class RestService {
 
       return this.http
         .post(`${this.API_PFAD}${entity.constructor.path}`, entity)
-        .toPromise()
-        .then(response => {
+        .pipe(
+          map(response => {
           //$log.debug("RestService.speichern(): insert OK", response);
 
           // Neuen Satz in eine Entity umwandeln
           return new entity.constructor(response['data']);
-        })
-        .catch(this.fehlerBehandeln);
+          }),
+          catchError(error => this.fehlerBehandeln(error))
+        );
     }
   };
 
@@ -175,12 +177,12 @@ export class RestService {
   embeddedAufloesen(obj) {
     let embedded;
 
-    if(this === undefined)
-      return;
+    // if(this === undefined)
+    //  return;
 
     if (isArray(obj)) {
       // Arrayelemente umstrukturieren
-      obj.forEach(this.embeddedAufloesen);
+      obj.forEach(e => this.embeddedAufloesen(e));
 
     } else if (isObject(obj) && (embedded = obj['_embedded'])) {
       // Inhalte von _embedded in diesem Objekt platzieren
@@ -199,6 +201,10 @@ export class RestService {
    * Ersetzt in den Request-Daten alle Entity-Objekte durch ihre self-Links.
    */
   entitiesVerlinken(obj) {
+
+    if(this === undefined)
+      return;
+
     if (isArray(obj)) {
       // In Arrayelementen ersetzen
       obj.forEach(this.entitiesVerlinken);
