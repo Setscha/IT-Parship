@@ -5,41 +5,17 @@
 <mat-dialog-content style="display: flex; flex-direction: column">
   <div>
     <mat-form-field style="width: 70%;">
-      <input matInput placeholder="Projektname" [(ngModel)]="name"
-             #projektName="ngModel" required>
-
-      <mat-error *ngIf="projektName.invalid && (projektName.dirty || projektName.touched)"
-                 class="alert alert-danger">
-        <div *ngIf="projektName.errors.required">
-          Name wird benötigt.
-        </div>
-      </mat-error>
+      <input matInput type="text" placeholder="Projektname" [(ngModel)]="name">
     </mat-form-field>
 
     <mat-form-field style="width: 25%; margin-left: 5%">
-      <input matInput type="number" placeholder="max. Schüler" [(ngModel)]="maxSchueler"
-             #projektDescription="ngModel" required>
-
-      <mat-error *ngIf="projektDescription.invalid && (projektDescription.dirty || projektDescription.touched)"
-                 class="alert alert-danger">
-        <div *ngIf="projektDescription.errors.required">
-          Schüleranzahl wird benötigt.
-        </div>
-      </mat-error>
+      <input matInput type="number" placeholder="max. Schüler" [(ngModel)]="maxSchueler">
     </mat-form-field>
   </div>
 
   <mat-form-field>
-    <textarea matInput placeholder="Pojektbeschreibung" [matTextareaAutosize]="true" [(ngModel)]="description"
-              #projektMaxSchueler="ngModel" required>
+    <textarea matInput placeholder="Pojektbeschreibung" [matTextareaAutosize]="true" [(ngModel)]="description">
     </textarea>
-
-    <mat-error *ngIf="projektMaxSchueler.invalid && (projektMaxSchueler.dirty || projektMaxSchueler.touched)"
-               class="alert alert-danger">
-      <div *ngIf="projektMaxSchueler.errors.required">
-        Beschreibung wird benötigt.
-      </div>
-    </mat-error>
   </mat-form-field>
 </mat-dialog-content>
 

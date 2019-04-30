@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {DialogData} from '../../../DialogData';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-edit-projekt-dialog',
@@ -14,18 +13,11 @@ export class EditProjektDialogComponent implements OnInit {
   description = this.data.description;
   maxSchueler = this.data.maxSchueler;
 
-  dialogForm: FormGroup;
-
   constructor(
     public dialogRef: MatDialogRef<EditProjektDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   ngOnInit() {
-    this.dialogForm = new FormGroup({
-      'name': new FormControl(this.name, [
-        Validators.required,
-      ])
-    });
   }
 
   save() {
