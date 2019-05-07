@@ -49,7 +49,6 @@ export class RestService {
         catchError(error => this.fehlerBehandeln(error)),
         map(response => {
           response = this.embeddedAufloesen(response);
-          console.log(response);
           //$log.debug("RestService.seiteLaden() OK", response);
           // Seitennummer im zulässigen Bereich, oder keine Seiten?
           if (response['page']['number'] < response['page']['totalPages'] || !response['page']['totalElements']) {
@@ -108,7 +107,7 @@ export class RestService {
     } else {
       // Entity stammt nicht vom Server und kann dort nicht gelöscht werden
       this.fehlerBehandeln({ status: 404, statusText: "Not found", data: {} });
-      return false;
+      return of(null);
     }
   };
 
@@ -134,10 +133,10 @@ export class RestService {
         .pipe(
           catchError(error => this.fehlerBehandeln(error)),
           map(response => {
-          //$log.debug("RestService.speichern(): update OK", response);
+            //$log.debug("RestService.speichern(): update OK", response);
 
-          // Aktualisierten Satz in eine Entity umwandeln
-          return new entity.constructor(response);
+            // Aktualisierten Satz in eine Entity umwandeln
+            return new entity.constructor(response);
           })
         );
 
@@ -149,10 +148,10 @@ export class RestService {
         .post(`${this.API_PFAD}${entity.constructor.path}`, entity)
         .pipe(
           map(response => {
-          //$log.debug("RestService.speichern(): insert OK", response);
+            //$log.debug("RestService.speichern(): insert OK", response);
 
-          // Neuen Satz in eine Entity umwandeln
-          return new entity.constructor(response['data']);
+            // Neuen Satz in eine Entity umwandeln
+            return new entity.constructor(response['data']);
           }),
           catchError(error => this.fehlerBehandeln(error))
         );
@@ -177,9 +176,6 @@ export class RestService {
   embeddedAufloesen(obj) {
     let embedded;
 
-    // if(this === undefined)
-    //  return;
-
     if (isArray(obj)) {
       // Arrayelemente umstrukturieren
       obj.forEach(e => this.embeddedAufloesen(e));
@@ -202,12 +198,9 @@ export class RestService {
    */
   entitiesVerlinken(obj) {
 
-    if(this === undefined)
-      return;
-
     if (isArray(obj)) {
       // In Arrayelementen ersetzen
-      obj.forEach(this.entitiesVerlinken);
+      obj.forEach(e => this.entitiesVerlinken(e));
 
     } else if (isObject(obj)) {
       // Verlinkte Objekte suchen und durch ihre self-Links ersetzen

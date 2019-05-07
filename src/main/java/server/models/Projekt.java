@@ -1,5 +1,6 @@
 package server.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -15,7 +16,7 @@ public class Projekt extends Persistent {
     @OneToMany(mappedBy = "projekt")
     private Set<Person> personas;
 
-    @OneToMany(mappedBy = "projekt")
+    @OneToMany(mappedBy = "projekt", cascade = CascadeType.REMOVE)
     private Set<Anforderung> anforderungen;
 
     public String getName() {

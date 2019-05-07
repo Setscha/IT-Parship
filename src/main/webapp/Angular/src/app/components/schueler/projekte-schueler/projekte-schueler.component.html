@@ -3,6 +3,7 @@
     <mat-card-title>{{projekt.name}}</mat-card-title>
     <mat-card-subtitle>{{projekt.max_schueler}} Schüler</mat-card-subtitle>
     <mat-card-content>{{projekt.beschreibung}}</mat-card-content>
+    <button mat-raised-button (click)="del(projekt);">Delete</button>
   </mat-card>
 </div>
 <ng-template #loading >
