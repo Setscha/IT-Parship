@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-test/5.0.12.RELEASE/spring-test-5.0.12.RELEASE.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-test/5.0.12.RELEASE/spring-test-5.0.12.RELEASE-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-test/5.0.12.RELEASE/spring-test-5.0.12.RELEASE-sources.jar!/" />
     </SOURCES>

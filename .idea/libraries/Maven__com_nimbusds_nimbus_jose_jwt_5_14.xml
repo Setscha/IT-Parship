@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/5.14/nimbus-jose-jwt-5.14.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/5.14/nimbus-jose-jwt-5.14-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/5.14/nimbus-jose-jwt-5.14-sources.jar!/" />
     </SOURCES>
