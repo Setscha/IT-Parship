@@ -29,4 +29,17 @@ export class ProjekteSchuelerComponent implements OnInit {
     });
   }
 
+  insert() {
+    this.rest.speichern(new Projekt({
+      beschreibung: 'Test',
+      maxSchueler: 2,
+      name: 'T',
+      anforderungen: [],
+      _links: [],
+      etag: 0,
+    })).subscribe(() => {
+      this.ngOnInit();
+    });
+  }
+
 }

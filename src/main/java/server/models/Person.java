@@ -13,6 +13,8 @@ public class Person extends Persistent implements UserInfo {
 
     private String username;
 
+    private String displayName;
+
     @OneToMany(mappedBy = "person")
     private Set<Qualifikation> qualifikationen;
 
@@ -21,10 +23,6 @@ public class Person extends Persistent implements UserInfo {
 
     @ManyToOne
     private Projekt projekt;
-
-    @OneToMany(mappedBy = "projekt")
-    private Set<Anforderung> anforderungen;
-
 
     public String getUsername() {
         return username;
@@ -59,11 +57,11 @@ public class Person extends Persistent implements UserInfo {
         this.projekt = projekt;
     }
 
-    public Set<Anforderung> getAnforderungen() {
-        return anforderungen;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setAnforderungen(Set<Anforderung> anforderungen) {
-        this.anforderungen = anforderungen;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

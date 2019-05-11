@@ -134,7 +134,7 @@ export class RestService {
           catchError(error => this.fehlerBehandeln(error)),
           map(response => {
             //$log.debug("RestService.speichern(): update OK", response);
-
+            response = this.embeddedAufloesen(response);
             // Aktualisierten Satz in eine Entity umwandeln
             return new entity.constructor(response);
           })
@@ -149,9 +149,9 @@ export class RestService {
         .pipe(
           map(response => {
             //$log.debug("RestService.speichern(): insert OK", response);
-
+            response = this.embeddedAufloesen(response);
             // Neuen Satz in eine Entity umwandeln
-            return new entity.constructor(response['data']);
+            return new entity.constructor(response);
           }),
           catchError(error => this.fehlerBehandeln(error))
         );

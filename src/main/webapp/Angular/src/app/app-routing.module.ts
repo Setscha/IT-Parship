@@ -10,6 +10,7 @@ import {SchuelerAdminComponent} from './components/admin/schueler-admin/schueler
 import {ProjekteSchuelerComponent} from './components/schueler/projekte-schueler/projekte-schueler.component';
 import {KompetenzenSchuelerComponent} from './components/schueler/kompetenzen-schueler/kompetenzen-schueler.component';
 import {SettingsSchuelerComponent} from './components/schueler/settings-schueler/settings-schueler.component';
+import {KompetenzenComponent} from "./components/lehrer/kompetenzen/kompetenzen.component";
 
 const routes: Routes = [
     {path: 'projekteLehrer', component: ProjekteLehrerComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
     {path: 'projekteSchueler', component: ProjekteSchuelerComponent},
     {path: 'kompetenzenSchueler', component: KompetenzenSchuelerComponent},
     {path: 'settingsSchueler', component: SettingsSchuelerComponent},
+    {path: 'kompetenzen', component: KompetenzenComponent}
 
 ];
 
