@@ -1,5 +1,9 @@
-<div class="projekt-liste">
-  <app-lehrer-projekt class="lehrer-projekt" *ngFor="let p of projekte"
+<div *ngIf="laden">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="projekt-liste" *ngIf="projekte | async as projects">
+  <app-lehrer-projekt class="lehrer-projekt" *ngFor="let p of projects['entities']"
                       [projekt]="p"
                       (editProjektOutput)="editProjekt($event)" (deleteProjektOutput)="deleteProjekt($event)">
   </app-lehrer-projekt>

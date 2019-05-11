@@ -24,31 +24,28 @@ export class AnforderungComponent implements OnInit {
   anforderungForm: FormGroup;
 
   changeAnforderung = () => {
-    if (this.anforderung.isDisabled) {
-      this.anforderung.isDisabled = false;
-    }
+    this.anforderung.isEnabled = !this.anforderung.isEnabled;
   }
 
   saveAnforderung = () => {
-    if (this.anforderung.name !== '' && this.anforderung.prio !== null && this.anforderung.prio > 0) {
-      this.changeAnforderung();
-      console.log({id: this.anforderung.id, name: this.anforderung.name, prio: this.anforderung.prio});
-      this.anforderung.isDisabled = true;
-      this.changeAnforderungOutput.emit({
+    if (this.anforderung.kompetenz.beschreibung !== '' && this.anforderung.ausmass !== null && this.anforderung.ausmass > 0) {
+      //console.log({id: this.anforderung.id, name: this.anforderung.name, prio: this.anforderung.prio});
+      this.anforderung.isEnabled = false;
+      /*this.changeAnforderungOutput.emit({
         id: this.anforderung.id,
         name: this.anforderung.name,
         prio: this.anforderung.prio,
-        isDisabled: true
-      });
+        isEnabled: true
+      });*/
       this.openSnackBar('Anforderung wurde gespeichert!', 'OK', 2000);
     }
   }
 
+  //TODO: anforderungen properties fixen, irgendwas mit id falls die nicht gibt
+
   deleteAnforderung = () => {
-    if ((this.anforderung.name !== '' && this.anforderung.prio > 0 ) || this.anforderung.id !== 0) {
-      this.deleteAnforderungOutput.emit({id: this.anforderung.id, name: this.anforderung.name, prio: this.anforderung.prio});
-      this.openSnackBar('Anforderung wurde gelöscht!', 'OK', 2000);
-    }
+    this.deleteAnforderungOutput.emit({anforderung: this.anforderung});
+
   }
 
   constructor(private snackBar: MatSnackBar) { }
@@ -60,6 +57,13 @@ export class AnforderungComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    if(!this.anforderung){
+      this.anforderung = {kompetenz: {beschreibung: ''}}
+    }
+    if(this.anforderung && !this.anforderung.kompetenz){
+      this.anforderung.kompetenz = {beschreibung: ''};
+    }
 
     this.anforderungForm = new FormGroup({
       'prior': new FormControl(this.anforderung.prio, [

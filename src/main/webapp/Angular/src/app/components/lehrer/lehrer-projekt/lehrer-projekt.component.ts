@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {EditProjektDialogComponent} from '../edit-projekt-dialog/edit-projekt-dialog.component';
 import {DeleteProjektDialogComponent} from '../delete-projekt-dialog/delete-projekt-dialog.component';
+import {Projekt} from "../../../models/projekt";
+import {RestService} from "../../../services/rest.service";
 
 @Component({
   selector: 'app-lehrer-projekt',
@@ -11,7 +13,7 @@ import {DeleteProjektDialogComponent} from '../delete-projekt-dialog/delete-proj
 export class LehrerProjektComponent implements OnInit {
 
   @Input()
-  projekt: any;
+  projekt: Projekt;
 
   @Output()
   editProjektOutput = new EventEmitter<any>();
@@ -28,12 +30,9 @@ export class LehrerProjektComponent implements OnInit {
 
    kompetenzPool = [
     new Kompetenz('Programmieren'),
-    new Kompetenz('Schneiden'),
-    new Kompetenz('Filmen'),
-    new Kompetenz('Fotografieren'),
     new Kompetenz('Audio'),
-    new Kompetenz('Schneuzen'),
-    new Kompetenz('Webdev')
+    new Kompetenz('Raspberry'),
+    new Kompetenz('Video')
   ];
 
   editProjekt = () => {
@@ -45,7 +44,7 @@ export class LehrerProjektComponent implements OnInit {
       data: {
         name: this.projekt.name,
         description: this.projekt.beschreibung,
-        maxSchueler: this.projekt.maxSchueler
+        maxSchueler: this.projekt.max_schueler
       },
       autoFocus: false
     });
@@ -56,52 +55,58 @@ export class LehrerProjektComponent implements OnInit {
       if (typeof result !== 'undefined') {
         if (result.delete === true) {
           this.openSnackBar('Projekt gelöscht!');
-          this.deleteProjektOutput.emit({id: this.projekt.id});
+          this.deleteProjektOutput.emit({projekt: this.projekt});
         }
       }
     });
   }
 
   addAnforderung = () => {
-    const anforerungenLength = this.projekt.anforderungen.length;
-    if (anforerungenLength === 0) {
+    /*if (this.nAnforderungen === 0) {
       this.projekt.anforderungen.push(new Anforderung(0, '', null, false));
       return;
     }
-    if (this.projekt.anforderungen[anforerungenLength - 1].name !== '') {
-      this.projekt.anforderungen.push(new Anforderung(this.projekt.anforderungen[anforerungenLength - 1].id + 1, '', null, false));
-      console.log(this.projekt.anforderungen[anforerungenLength - 1]);
-    }
+    if (this.projekt.anforderungen[this.nAnforderungen - 1].name !== '') {
+      this.projekt.anforderungen.push(new Anforderung(this.projekt.anforderungen[this.nAnforderungen - 1].id + 1, '', null, false));
+      console.log(this.projekt.anforderungen[this.nAnforderungen - 1]);
+    }*/
   }
 
   changeAnforderung = (a) => {
     // Anforderungen können von der Anforderungs Komponente nur geändert werden weil sie in dieser Komponente geadded werden
     // Da muss jetzt die Anforderung in der Datenbank geändert werden, dann bleibt alles gespeichert weils be jedem reload neu aus DB ausgelesen wird
+    /*
     console.log(a.id);
 
-    for (let i = 0; i < this.projekt.anforderungen.length - 1; i++) {
+    for (let i = 0; i < this.nAnforderungen - 1; i++) {
       if (this.projekt.anforderungen[i].id === a.id) {
         this.projekt.anforderungen[i] = new Anforderung(a.id, a.name, a.prio, a.isDisabled);
       }
     }
-
-  }
+    */
+  };
 
   deleteAnforderung = (a) => {
-    this.projekt.anforderungen = this.projekt.anforderungen.filter(x => x.id !== a.id);
-    if (this.projekt.anforderungen.length === 0) {
-      this.addAnforderung();
-    }
-  }
+    console.log(a.anforderung);
+    this.rest.loeschen(a.anforderung).subscribe(() => {
+      //this.ngOnInit();
+    });
 
-  constructor(private snackBar: MatSnackBar, public dialog: MatDialog) { }
+    /*
+    this.projekt.anforderungen = this.projekt.anforderungen.filter(x => x.id !== a.id);
+    if (this.nAnforderungen === 0) {
+      this.addAnforderung();
+    }*/
+  };
+
+  constructor(private snackBar: MatSnackBar, public dialog: MatDialog, private rest: RestService) { }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(EditProjektDialogComponent, {
       data: {
         name: this.projekt.name,
         description: this.projekt.beschreibung,
-        maxSchueler: this.projekt.maxSchueler
+        maxSchueler: this.projekt.max_schueler
       },
       width: '40%'
     });
@@ -110,12 +115,12 @@ export class LehrerProjektComponent implements OnInit {
       console.log('The dialog was closed');
       console.log(result);
       if (typeof result !== 'undefined') {
-        if (this.projekt.name !== result.name || this.projekt.beschreibung !== result.description || this.projekt.maxSchueler !== result.maxSchueler) {
+        if (this.projekt.name !== result.name || this.projekt.beschreibung !== result.description || this.projekt.max_schueler !== result.maxSchueler) {
           this.openSnackBar('Projekt aktualisiert!');
           this.projekt.name = result.name;
           this.projekt.beschreibung = result.description;
-          this.projekt.maxSchueler = result.maxSchueler;
-          this.editProjektOutput.emit({name: this.projekt.name, description: this.projekt.beschreibung, maxSchueler: this.projekt.maxSchueler});
+          this.projekt.max_schueler = result.maxSchueler;
+          this.editProjektOutput.emit({projekt: this.projekt});
         }
       }
     });
@@ -129,7 +134,7 @@ export class LehrerProjektComponent implements OnInit {
 
   ngOnInit() {
 
-    this.nAnforderungen = this.projekt.anforderungen.length;
+    this.nAnforderungen = this.projekt.anforderungen ? this.projekt.anforderungen.length : 0;
 
     if (this.nAnforderungen === 0) {
       this.addAnforderung();
