@@ -1,12 +1,12 @@
 <div class="bg"></div>
 
-<form action="http://IT-Parship.tk/login.php" class="login">
+<form #form action="http://localhost:8081/oauth2/authorization/microsoft" class="login" name="form">
   <h1>IT-Parship</h1>
 
   <div class="logo">
   </div>
 
-  <button type="submit" class="microsoftButton">
+  <button type="submit" class="microsoftButton" (click)="form.submit()">
     <div style="display:flex; align-items: center;">
       <img src="../../../assets/ms_icon.png" width="21" height="21" >
       <p>Sign in with Microsoft</p>
@@ -14,9 +14,8 @@
   </button>
 
   <mat-form-field style="margin-top: 10px;">
-    <input matInput placeholder="Einschreibschlüssel"
-           required pattern="\d{5}">
-
+    <input matInput name="key" placeholder="Einschreibschlüssel"
+    required pattern="\d{5}">
   </mat-form-field>
 
 

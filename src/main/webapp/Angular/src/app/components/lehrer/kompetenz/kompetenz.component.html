@@ -1,0 +1,25 @@
+<mat-list-item>
+  <div matLine>
+    <p *ngIf="!edit">{{kompetenz.beschreibung}}</p>
+    <mat-form-field *ngIf="edit">
+      <input matInput type="text" [ngModel]="kompetenz.beschreibung" [(ngModel)]="neueBeschreibung">
+    </mat-form-field>
+  </div>
+  <button mat-icon-button *ngIf="!edit" (click)="edit = !edit"
+          matTooltip="Kompetenz bearbeiten" [matTooltipShowDelay]="500" matTooltipPosition='left'>
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button mat-icon-button *ngIf="edit" (click)="edit = !edit; editKompetenz()"
+          matTooltip="Speichern" [matTooltipShowDelay]="500" matTooltipPosition='left'>
+    <mat-icon>save</mat-icon>
+  </button>
+  <button mat-icon-button *ngIf="edit" (click)="edit = !edit"
+          matTooltip="Abbrechen" [matTooltipShowDelay]="500" matTooltipPosition='left'>
+    <mat-icon>cancel</mat-icon>
+  </button>
+  <button mat-icon-button (click)="deleteKompetenz(kompetenz)" class="mat-warn"
+          [matTooltip]="kompetenz.inUse ? 'Kompetenz kann nicht gelöscht werden, da sie in Verwendung ist' : 'Kompetenz löschen'"
+          [matTooltipShowDelay]="500" matTooltipPosition='left' [disabled]="kompetenz.inUse">
+    <mat-icon>delete</mat-icon>
+  </button>
+</mat-list-item>

@@ -7,18 +7,7 @@
 </button>
 <div *ngIf="kompetenzen | async as kompetenzenAsync; else loading">
   <mat-list>
-    <mat-list-item *ngFor="let kompetenz of kompetenzenAsync['entities']">
-      <h3 matLine> {{kompetenz.beschreibung}} </h3>
-      <button mat-icon-button (click)="editKompetenz(kompetenz)"
-              matTooltip="Kompetenz bearbeiten" [matTooltipShowDelay]="500" matTooltipPosition='left'>
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-icon-button (click)="deleteKompetenz(kompetenz)" class="mat-warn"
-              [matTooltip]="kompetenz.inUse ? 'Kompetenz kann nicht gelöscht werden, da sie in Verwendung ist' : 'Kompetenz löschen'"
-              [matTooltipShowDelay]="500" matTooltipPosition='left' [disabled]="kompetenz.inUse">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </mat-list-item>
+      <app-kompetenz *ngFor="let kompetenz of kompetenzenAsync['entities']" [kompetenz]="kompetenz" (edited)="ngOnInit()"></app-kompetenz>
   </mat-list>
 </div>
 <ng-template #loading >

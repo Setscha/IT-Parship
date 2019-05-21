@@ -26,17 +26,4 @@ export class KompetenzenComponent implements OnInit {
     });
   }
 
-  deleteKompetenz(kompetenz) {
-    this.rest.loeschen(kompetenz).subscribe(() => {
-      this.ngOnInit();
-    });
-  }
-
-  editKompetenz(kompetenz) {
-    kompetenz.beschreibung = 'Test';
-    this.rest.speichern(kompetenz).subscribe(() => {
-      this.ngOnInit();
-    });
-  }
-
 }
