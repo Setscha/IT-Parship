@@ -72,3 +72,7 @@ insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) va
 insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (48, 0, 69, 3, 7);
 insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (49, 0, 819, 1, 14);
 insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (50, 0, 918, 1, 6);
+
+insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID) values (1, 0, 'Seczer Tobias',	'6159@htl.rennweg.at', null);
+
+INSERT into QUALIFIKATION VALUES (1, 0, 5, 1, 1);
