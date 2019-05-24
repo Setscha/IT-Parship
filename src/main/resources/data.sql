@@ -1,78 +1,48 @@
-insert into projekt (id, version, beschreibung, max_schueler, name) values (1, 0, 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui. Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam.', 5, 'Asoka');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (2, 0, 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam. Nam tristique tortor eu pede.', 6, 'Vagram');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (3, 0, 'Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est.', 5, 'Flowdesk');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (4, 0, 'Fusce posuere felis sed lacus.', 7, 'Solarbreeze');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (5, 0, 'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.', 5, 'Lotlux');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (6, 0, 'Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.', 5, 'Bitchip');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (7, 0, 'Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat.', 6, 'Stronghold');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (8, 0, 'Nulla facilisi.', 4, 'Zathin');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (9, 0, 'Suspendisse potenti. Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue.', 6, 'Latlux');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (10, 0, 'Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.', 4, 'Mat Lam Tam');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (11, 0, 'Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante.', 3, 'Stim');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (12, 0, 'Nulla facilisi. Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit.', 4, 'Domainer');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (13, 0, 'Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.', 7, 'Toughjoyfax');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (14, 0, 'Nunc purus. Phasellus in felis. Donec semper sapien a libero. Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.', 2, 'Voltsillam');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (15, 0, 'Nullam varius. Nulla facilisi. Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.', 3, 'Sonsing');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (16, 0, 'In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.', 2, 'Andalax');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (17, 0, 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui. Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti. Nullam porttitor lacus at turpis.', 6, 'Kanlam');
-insert into projekt (id, version, beschreibung, max_schueler, name) values (18, 0, 'Sed accumsan felis. Ut at dolor quis odio consequat varius.', 3, 'Y-find');
+insert into projekt (id, version, beschreibung, max_schueler, name) values (1, 0, 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui. Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam.', 2, 'Asoka');
+insert into projekt (id, version, beschreibung, max_schueler, name) values (2, 0, 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam. Nam tristique tortor eu pede.', 2, 'Vagram');
+insert into projekt (id, version, beschreibung, max_schueler, name) values (3, 0, 'Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est.', 3, 'Flowdesk');
 
 insert into kompetenz (id, version, beschreibung) values (1, 0, 'Video');
 insert into kompetenz (id, version, beschreibung) values (2, 0, 'Audio');
 insert into kompetenz (id, version, beschreibung) values (3, 0, 'Programmieren');
 insert into kompetenz (id, version, beschreibung) values (4, 0, 'Raspberry');
 
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (1, 0, 987, 1, 18);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (2, 0, 988, 1, 15);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (3, 0, 456, 2, 12);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (4, 0, 819, 1, 18);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (5, 0, 636, 3, 16);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (6, 0, 371, 4, 9);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (7, 0, 52, 1, 13);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (8, 0, 369, 2, 15);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (9, 0, 306, 2, 6);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (10, 0, 43, 4, 7);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (11, 0, 827, 1, 16);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (12, 0, 214, 4, 17);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (13, 0, 126, 4, 5);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (14, 0, 889, 3, 10);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (15, 0, 738, 4, 16);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (16, 0, 621, 4, 14);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (17, 0, 836, 4, 1);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (18, 0, 786, 3, 18);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (19, 0, 805, 2, 14);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (20, 0, 236, 2, 17);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (21, 0, 915, 3, 16);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (22, 0, 664, 1, 4);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (23, 0, 316, 2, 7);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (24, 0, 955, 2, 2);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (25, 0, 990, 1, 9);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (26, 0, 205, 1, 3);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (27, 0, 842, 3, 17);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (28, 0, 999, 3, 17);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (29, 0, 358, 2, 4);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (30, 0, 985, 1, 9);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (31, 0, 975, 3, 11);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (32, 0, 98, 3, 15);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (33, 0, 54, 3, 14);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (34, 0, 263, 1, 5);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (35, 0, 313, 4, 16);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (36, 0, 127, 4, 16);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (37, 0, 35, 4, 15);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (38, 0, 757, 1, 6);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (39, 0, 470, 2, 10);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (40, 0, 257, 2, 11);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (41, 0, 454, 1, 13);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (42, 0, 583, 3, 17);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (43, 0, 408, 3, 4);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (44, 0, 322, 3, 11);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (45, 0, 305, 1, 3);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (46, 0, 237, 2, 15);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (47, 0, 873, 3, 16);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (48, 0, 69, 3, 7);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (49, 0, 819, 1, 14);
-insert into anforderung (id, version, ausmass, kompetenz_id, qualifikationen) values (50, 0, 918, 1, 6);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (2, 0, 5, 2, 1);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (3, 0, 3, 3, 1);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (4, 0, 5, 4, 1);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (5, 0, 6, 3, 2);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (6, 0, 8, 4, 2);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (7, 0, 2, 1, 2);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (8, 0, 8, 2, 2);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (9, 0, 8, 1, 3);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (10, 0, 6, 2, 3);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (11, 0, 2, 3, 3);
+
 
 insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID) values (1, 0, 'Seczer Tobias',	'6159@htl.rennweg.at', null);
+INSERT into QUALIFIKATION VALUES (1, 0, 6, 1, 1);
+INSERT into QUALIFIKATION VALUES (6, 0, 5, 3, 1);
+INSERT into QUALIFIKATION VALUES (7, 0, 6, 4, 1);
 
-INSERT into QUALIFIKATION VALUES (1, 0, 5, 1, 1);
+insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID) values (2, 0, 'Kisling Daniel',	'6152@htl.rennweg.at', null);
+INSERT into QUALIFIKATION VALUES (2, 0, 3, 4, 2);
+INSERT into QUALIFIKATION VALUES (5, 0, 4, 2, 2);
+
+insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID) values (3, 0, 'Ott Dominik',	'6158@htl.rennweg.at', null);
+INSERT into QUALIFIKATION VALUES (3, 0, 1, 3, 3);
+INSERT into QUALIFIKATION VALUES (8, 0, 8, 2, 3);
+
+insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID) values (4, 0, 'Inführ Tobias',	'6159@htl.rennweg.at', null);
+INSERT into QUALIFIKATION VALUES (4, 0, 6, 2, 4);
+
+insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID) values (5, 0, 'Preissegger Leo',	'6153@htl.rennweg.at', null);
+INSERT into QUALIFIKATION VALUES (11, 0, 10, 3, 5);
+INSERT into QUALIFIKATION VALUES (12, 0, 7, 4, 5);
+
+insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID) values (6, 0, 'Kubesch Oliver',	'6154@htl.rennweg.at', null);
+INSERT into QUALIFIKATION VALUES (9, 0, 6, 1, 6);
+INSERT into QUALIFIKATION VALUES (10, 0, 8, 2, 6);
+
+insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID) values (7, 0, 'Schloessl Andreas',	'6155@htl.rennweg.at', null);
+INSERT into QUALIFIKATION VALUES (13, 0, 8, 3, 7);
+INSERT into QUALIFIKATION VALUES (14, 0, 8, 4, 7);

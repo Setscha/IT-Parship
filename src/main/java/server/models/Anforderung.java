@@ -1,5 +1,7 @@
 package server.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -9,7 +11,7 @@ public class Anforderung extends Persistent {
     private int ausmass;
 
     @ManyToOne
-    @JoinColumn(name="qualifikationen")
+    @JoinColumn(name="projekt")
     private Projekt projekt;
 
     @ManyToOne

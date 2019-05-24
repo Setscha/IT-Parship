@@ -3,7 +3,9 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/ext/jersey-bean-validation/2.26/jersey-bean-validation-2.26.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/ext/jersey-bean-validation/2.26/jersey-bean-validation-2.26-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/ext/jersey-bean-validation/2.26/jersey-bean-validation-2.26-sources.jar!/" />
     </SOURCES>

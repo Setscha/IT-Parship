@@ -1,11 +1,9 @@
 package server.models;
 
 import at.rennweg.htl.sew.autoconfig.UserInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -15,7 +13,7 @@ public class Person extends Persistent implements UserInfo {
 
     private String displayName;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
     private Set<Qualifikation> qualifikationen;
 
     @Transient

@@ -1,9 +1,8 @@
 package server.models;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -13,10 +12,10 @@ public class Projekt extends Persistent {
     private String beschreibung;
     private Integer maxSchueler;
 
-    @OneToMany(mappedBy = "projekt")
+    @OneToMany(mappedBy = "projekt", fetch = FetchType.EAGER)
     private Set<Person> personas;
 
-    @OneToMany(mappedBy = "projekt", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "projekt", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Anforderung> anforderungen;
 
     public String getName() {

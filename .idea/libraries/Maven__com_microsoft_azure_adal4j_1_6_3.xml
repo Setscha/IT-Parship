@@ -3,7 +3,9 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/microsoft/azure/adal4j/1.6.3/adal4j-1.6.3.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/microsoft/azure/adal4j/1.6.3/adal4j-1.6.3-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/com/microsoft/azure/adal4j/1.6.3/adal4j-1.6.3-sources.jar!/" />
     </SOURCES>
