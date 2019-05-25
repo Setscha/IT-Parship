@@ -54,11 +54,12 @@ public class Match {
         personRepository.findAll().forEach(students::add);
 
         int plaetze = projekte.stream().mapToInt(p -> (int) p.getMaxSchueler()).sum();
-       /* if(plaetze != students.size()){
-            return new HashMap<Long, String>(){{
-                put(1L, String.format("Fehler, %d Plätze aber %d Schüler!", plaetze, students.size()));
-            }};
-        }*/
+        if(plaetze != students.size()){
+//            return new HashMap<Long, String>(){{
+//                put(-1L, String.format("Fehler, %d Plätze für %d Schüler!", plaetze, students.size()));
+//            }};
+            return new HashMap<>();
+        }
 
 
         schuelerKompetenzen = getStudentKompetenzList();
@@ -67,9 +68,12 @@ public class Match {
 
         List<SchuelerPlatz> schuelerPraeferenzen = schuelerPlaetzeGenerieren(projektPraeferenzen);
 
-        Map<Long, String> match = match(students, schuelerPraeferenzen, projektPraeferenzen);
+        Map<ProjektPlatz, Person> match = match(students, schuelerPraeferenzen, projektPraeferenzen);
 
-        return match;
+        Map<Long, String> ret = new HashMap<>();
+        match.forEach((k, v) -> ret.put(k.projektPlatzID, v.getDisplayName()));
+
+        return ret;
     }
 
     private List<ProjektPlatz> projektPlaetzeGenerieren(List<Projekt> projekte) {
@@ -91,41 +95,40 @@ public class Match {
         List<SchuelerPlatz> plaetze = new ArrayList<>();
 
         for (Long schueler : schuelerKompetenzen.keySet()) {
-            List<Long> order = preferredProjectOrder(personRepository.findById(schueler).get(), projektPlaetze);
-            plaetze.add(new SchuelerPlatz(schueler, order.toArray(new Long[0])));
+            List<ProjektPlatz> order = preferredProjectOrder(personRepository.findById(schueler).get(), projektPlaetze);
+            plaetze.add(new SchuelerPlatz(schueler, order.toArray(new ProjektPlatz[0])));
         }
 
         return plaetze;
     }
 
-    private List<Long> preferredProjectOrder(Person schueler, List<ProjektPlatz> projektPlaetze) {
+    private List<ProjektPlatz> preferredProjectOrder(Person schueler, List<ProjektPlatz> projektPlaetze) {
         // Map in der die Eignung für das Projekt jedes Schülers gespeichert wird
         // Wenn der Schüler die gewünschte Kompetenz nicht besitzt, bekommt er einen default Wert 99
         // <SchülerID, Eignung>
-        Map<Long, Long> rangOrdnung = getProjectSuitability(schueler.getId(), projektPlaetze);
+        Map<ProjektPlatz, Long> rangOrdnung = getProjectSuitability(schueler.getId(), projektPlaetze);
 
         // Map der Projekte anhand des Wertes sortieren
-        Map<Long, Long> sorted = rangOrdnung
+        Map<ProjektPlatz, Long> sorted = rangOrdnung
                 .entrySet()
                 .stream()
                 .sorted(comparingByValue())
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
 
         return new ArrayList<>(sorted.keySet());
-        // return Arrays.asList(2L, 3L);
     }
 
-    private Map<Long, Long> getProjectSuitability(long schuelerID, List<ProjektPlatz> projektPlaetze) {
-        // Map<ProjektID, Eignung>
-        Map<Long, Long> rangOrdnung = new HashMap<>();
+    private Map<ProjektPlatz, Long> getProjectSuitability(long schuelerID, List<ProjektPlatz> projektPlaetze) {
+        // Map<ProjektPlatz, Eignung>
+        Map<ProjektPlatz, Long> rangOrdnung = new HashMap<>();
         for (ProjektPlatz projekt : projektPlaetze) {
             if (schuelerKompetenzen.get(schuelerID).contains(projekt.kompetenzID)) {
                 for (Qualifikation schuelerQualifikation : personRepository.findById(schuelerID).get().getQualifikationen()) {
                     if (schuelerQualifikation.getKompetenz().getId().equals(projekt.kompetenzID))
-                        rangOrdnung.put(projekt.projektPlatzID, Integer.toUnsignedLong(Math.abs(anforderungRepository.findById(projekt.anforderungID).get().getAusmass() - schuelerQualifikation.getAusmass())));
+                        rangOrdnung.put(projekt, Integer.toUnsignedLong(Math.abs(anforderungRepository.findById(projekt.anforderungID).get().getAusmass() - schuelerQualifikation.getAusmass())));
                 }
             } else {
-                rangOrdnung.put(projekt.projektPlatzID, 99L);
+                rangOrdnung.put(projekt, 99L);
             }
         }
         return rangOrdnung;
@@ -179,30 +182,30 @@ public class Match {
         return schuelerKompetenzen;
     }
 
-    private static Map<Long, String> match(List<Person> schueler,
-                                           List<SchuelerPlatz> schuelerPraeferenzen,
-                                           List<ProjektPlatz> projektPraeferenzen){
+    private static Map<ProjektPlatz, Person> match(List<Person> schueler,
+                                                   List<SchuelerPlatz> schuelerPraeferenzen,
+                                                   List<ProjektPlatz> projektPraeferenzen){
 
-        Map<Long, List<Long>> schuelerPrefer = schuelerPraeferenzen.stream()
+        Map<Long, List<ProjektPlatz>> schuelerPrefer = schuelerPraeferenzen.stream()
                 .collect(Collectors.toMap(SchuelerPlatz::getSchuelerID, SchuelerPlatz::getPreferredOrder));
 
         Map<Long, List<Long>> projektPrefer = projektPraeferenzen.stream()
                 .collect(Collectors.toMap(ProjektPlatz::getProjektPlatzID, ProjektPlatz::getPreferredOrder));
 
-        Map<Long, Person> engagedTo = new TreeMap<>();
+        Map<ProjektPlatz, Person> engagedTo = new TreeMap<>();
         List<Person> freieSchueler = new LinkedList<>();
         freieSchueler.addAll(schueler);
         while(!freieSchueler.isEmpty()){
             Person jetzigerSchueler = freieSchueler.remove(0);
-            List<Long> jetzigerSchuelerPrefers = schuelerPrefer.get(jetzigerSchueler.getId());
-            for(Long projekt:jetzigerSchuelerPrefers){
-                if(engagedTo.get(projekt) == null){
+            List<ProjektPlatz> jetzigerSchuelerPrefers = schuelerPrefer.get(jetzigerSchueler.getId());
+            for(ProjektPlatz projekt:jetzigerSchuelerPrefers){
+                if(!engagedTo.containsKey(projekt)){
                     engagedTo.put(projekt, jetzigerSchueler);
                     break;
                 }else{
                     Person otherSchueler = engagedTo.get(projekt);
-                    List<Long> jetzigesProjektPrefers = projektPrefer.get(projekt);
-                    if(jetzigesProjektPrefers.indexOf(jetzigerSchueler) < jetzigesProjektPrefers.indexOf(otherSchueler)){
+                    List<Long> jetzigesProjektPrefers = projektPrefer.get(projekt.projektPlatzID);
+                    if(jetzigesProjektPrefers.indexOf(jetzigerSchueler.getId()) < jetzigesProjektPrefers.indexOf(otherSchueler.getId())){
                         engagedTo.put(projekt, jetzigerSchueler);
                         freieSchueler.add(otherSchueler);
                         break;
@@ -210,14 +213,16 @@ public class Match {
                 }
             }
         }
-        Map<Long, String> returnMap = new HashMap<>();
-        engagedTo.forEach((k, v) -> returnMap.put(k, v.getDisplayName()));
-        return returnMap;
+//        Map<Long, String> returnMap = new HashMap<>();
+//        engagedTo.forEach((k, v) -> {
+//            returnMap.put(k, v);
+//        });
+        return engagedTo;
     }
 
 }
 
-class ProjektPlatz {
+class ProjektPlatz implements Comparable<ProjektPlatz> {
 
     public long projektPlatzID;
     public long projektID, anforderungID, kompetenzID, schuelerID;
@@ -240,14 +245,18 @@ class ProjektPlatz {
         return preferredOrder;
     }
 
+    @Override
+    public int compareTo(ProjektPlatz o) {
+        return (int) (getProjektPlatzID() - o.getProjektPlatzID());
+    }
 }
 
 class SchuelerPlatz {
 
     public long schuelerID;
-    public List<Long> preferredOrder;
+    public List<ProjektPlatz> preferredOrder;
 
-    SchuelerPlatz(long schueler_, Long... preferredOrder_) {
+    SchuelerPlatz(long schueler_, ProjektPlatz... preferredOrder_) {
         schuelerID = schueler_;
         preferredOrder = Arrays.asList(preferredOrder_);
     }
@@ -256,7 +265,7 @@ class SchuelerPlatz {
         return schuelerID;
     }
 
-    public List<Long> getPreferredOrder() {
+    public List<ProjektPlatz> getPreferredOrder() {
         return preferredOrder;
     }
 }
