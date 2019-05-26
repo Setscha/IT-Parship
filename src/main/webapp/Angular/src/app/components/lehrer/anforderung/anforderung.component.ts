@@ -85,8 +85,5 @@ export class AnforderungComponent implements OnInit {
         Validators.required,
       ])
     });
-
-    console.log("k");
-
   }
 }
