@@ -4,6 +4,7 @@ import {EditProjektDialogComponent} from '../edit-projekt-dialog/edit-projekt-di
 import {DeleteProjektDialogComponent} from '../delete-projekt-dialog/delete-projekt-dialog.component';
 import {Projekt} from "../../../models/projekt";
 import {RestService} from "../../../services/rest.service";
+import {Anforderung} from "../../../models/anforderung";
 
 @Component({
   selector: 'app-lehrer-projekt',
@@ -14,6 +15,9 @@ export class LehrerProjektComponent implements OnInit {
 
   @Input()
   projekt: Projekt;
+
+  @Input()
+  kompetenzPool: any;
 
   @Output()
   editProjektOutput = new EventEmitter<any>();
@@ -28,12 +32,12 @@ export class LehrerProjektComponent implements OnInit {
    * NOCHT NICHT !!! kompetenzPool wird in Oninit Methode gefiltert, dass nur Kompetenzen im Anforderung-Select ausgwählt werden können, die noch keine Anforderung sind
    **/
 
-   kompetenzPool = [
+  /* kompetenzPool = [
     new Kompetenz('Programmieren'),
     new Kompetenz('Audio'),
     new Kompetenz('Raspberry'),
     new Kompetenz('Video')
-  ];
+  ];*/
 
   editProjekt = () => {
     this.openDialog();
@@ -44,7 +48,7 @@ export class LehrerProjektComponent implements OnInit {
       data: {
         name: this.projekt.name,
         description: this.projekt.beschreibung,
-        maxSchueler: this.projekt.max_schueler
+        maxSchueler: this.projekt.maxSchueler
       },
       autoFocus: false
     });
@@ -62,14 +66,9 @@ export class LehrerProjektComponent implements OnInit {
   }
 
   addAnforderung = () => {
-    /*if (this.nAnforderungen === 0) {
-      this.projekt.anforderungen.push(new Anforderung(0, '', null, false));
-      return;
-    }
-    if (this.projekt.anforderungen[this.nAnforderungen - 1].name !== '') {
-      this.projekt.anforderungen.push(new Anforderung(this.projekt.anforderungen[this.nAnforderungen - 1].id + 1, '', null, false));
-      console.log(this.projekt.anforderungen[this.nAnforderungen - 1]);
-    }*/
+
+
+    this.projekt.anforderungen.push(new Anforderung({}));
   }
 
   changeAnforderung = (a) => {
@@ -106,7 +105,7 @@ export class LehrerProjektComponent implements OnInit {
       data: {
         name: this.projekt.name,
         description: this.projekt.beschreibung,
-        maxSchueler: this.projekt.max_schueler
+        maxSchueler: this.projekt.maxSchueler
       },
       width: '40%'
     });
@@ -115,13 +114,12 @@ export class LehrerProjektComponent implements OnInit {
       console.log('The dialog was closed');
       console.log(result);
       if (typeof result !== 'undefined') {
-        if (this.projekt.name !== result.name || this.projekt.beschreibung !== result.description || this.projekt.max_schueler !== result.maxSchueler) {
-          this.openSnackBar('Projekt aktualisiert!');
-          this.projekt.name = result.name;
-          this.projekt.beschreibung = result.description;
-          this.projekt.max_schueler = result.maxSchueler;
-          this.editProjektOutput.emit({projekt: this.projekt});
-        }
+        //this.projekt.name = result.name;
+        //this.projekt.beschreibung = result.beschreibung;
+        //this.projekt.maxSchueler = result.maxSchueler;
+        this.rest.speichern(this.projekt).subscribe(() => {
+          this.ngOnInit();
+        });
       }
     });
   }
@@ -140,28 +138,14 @@ export class LehrerProjektComponent implements OnInit {
       this.addAnforderung();
     }
 
+    /*this.kompetenzPool = this.rest.seiteLaden(
+      Kompetenz,
+      0,
+      undefined,
+      undefined
+    );*/
+
   }
 
 }
 
-class Anforderung {
-  id: number;
-  name: string;
-  prio: number;
-  isDisabled: boolean;
-
-  constructor(id: number, name: string, prio: number, isDisabled: boolean) {
-    this.id = id;
-    this.name = name;
-    this.prio = prio;
-    this.isDisabled = isDisabled;
-  }
-}
-
-class Kompetenz {
-  name: string;
-
-  constructor(name: string) {
-    this.name = name;
-  }
-}

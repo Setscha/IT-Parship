@@ -6,7 +6,7 @@
           {{projekt.name}}
         </mat-panel-title>
         <mat-panel-description>
-          max. Schüler {{projekt.max_schueler}}
+          max. Schüler {{projekt.maxSchueler}}
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div style="display: flex; justify-content: space-between">
@@ -37,7 +37,7 @@
         <mat-list role="list">
           <mat-list-item role="listitem" *ngFor="let a of projekt.anforderungen" style="margin-top: 20px;">
             <app-anforderung style="width: 100%" (changeAnforderungOutput)="changeAnforderung($event)" (deleteAnforderungOutput)="deleteAnforderung($event)"
-                             [anforderung]="a" [kompetenzPool]="kompetenzPool"></app-anforderung>
+                             [anforderung]="a" [kompetenzPool]="kompetenzPool" [projektLink]="projekt._links.projekt"></app-anforderung>
           </mat-list-item>
         </mat-list>
         <button mat-icon-button (click)="addAnforderung()" style="margin-top: 10px"

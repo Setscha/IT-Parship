@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {RestService} from "../../../services/rest.service";
+import {Anforderung} from "../../../models/anforderung";
 
 @Component({
   selector: 'app-anforderung',
@@ -11,6 +13,9 @@ export class AnforderungComponent implements OnInit {
 
   @Input()
   anforderung: any;
+
+  @Input()
+  projektLink: any;
 
   @Input()
   kompetenzPool: any;
@@ -37,18 +42,28 @@ export class AnforderungComponent implements OnInit {
         prio: this.anforderung.prio,
         isEnabled: true
       });*/
-      this.openSnackBar('Anforderung wurde gespeichert!', 'OK', 2000);
+      //console.log(new Anforderung(this.anforderung));
+      //this.anforderung._links.projekt = this.projektLink;
+      this.rest.speichern(new Anforderung(this.anforderung)).subscribe(() => {
+        console.log(new Anforderung(this.anforderung));
+        this.openSnackBar('Anforderung wurde gespeichert!', 'OK', 2000);
+
+      });
     }
   }
 
   //TODO: anforderungen properties fixen, irgendwas mit id falls die nicht gibt
 
   deleteAnforderung = () => {
-    this.deleteAnforderungOutput.emit({anforderung: this.anforderung});
+    //this.deleteAnforderungOutput.emit({anforderung: this.anforderung});
 
+    console.log(this.anforderung._links);
+    this.rest.loeschen(this.anforderung).subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor(private snackBar: MatSnackBar, private rest: RestService) { }
 
   openSnackBar(message: string, action: string, duration: number) {
     this.snackBar.open(message, action, {
@@ -70,5 +85,8 @@ export class AnforderungComponent implements OnInit {
         Validators.required,
       ])
     });
+
+    console.log("k");
+
   }
 }

@@ -3,6 +3,7 @@ import {EditProjektDialogComponent} from '../edit-projekt-dialog/edit-projekt-di
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {RestService} from "../../../services/rest.service";
 import {Projekt} from "../../../models/projekt";
+import {Kompetenz} from "../../../models/kompetenz";
 
 @Component({
   selector: 'app-projekte-lehrer',
@@ -15,6 +16,8 @@ export class ProjekteLehrerComponent implements OnInit {
    // new Projekt(1, 'IT-Parship', 'Das ist die tolle Deskription von IT-Parhsip: Dem Besten Pojekt der 4BI', 5, [new Anforderung(0, 'Programmieren', 1, true), new Anforderung(1, 'Filmen', 5, true), new Anforderung(2, 'Schneiden', 2, true)]),
    // new Projekt(2, 'SmartFeedback', 'Das ist die tolle Deskription von SmartFeedback: Dem zweit Besten Pojekt der 4BI', 6, [new Anforderung(0, 'Programmieren', 1, true), new Anforderung(1, 'Filmen', 5, true), new Anforderung(2, 'Schneiden', 2, true)])
   ];
+
+  kompetenzPool = [];
 
   laden = true;
 
@@ -44,7 +47,7 @@ export class ProjekteLehrerComponent implements OnInit {
       console.log('The dialog was closed');
       console.log(result);
       if (typeof result !== 'undefined') {
-        this.rest.speichern().subscribe(() => {
+        this.rest.speichern(new Projekt(result)).subscribe(() => {
           this.ngOnInit();
         });
       } else {
@@ -63,6 +66,9 @@ export class ProjekteLehrerComponent implements OnInit {
       undefined,
       undefined
     );
+
+    this.kompetenzPool = this.rest.seiteLaden(Kompetenz, 0, undefined, undefined);
+
   }
 
 }
