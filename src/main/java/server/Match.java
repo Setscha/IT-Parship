@@ -10,7 +10,6 @@ import server.models.*;
 import server.repositories.AnforderungRepository;
 import server.repositories.PersonRepository;
 import server.repositories.ProjektRepository;
-import server.repositories.QualifikationRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,20 +30,16 @@ public class Match {
     @Autowired
     private AnforderungRepository anforderungRepository;
 
-    @Autowired
-    private QualifikationRepository qualifikationRepository;
-
     private List<Person> students;
 
-
     // Map in der die Liste der Kompetenzen jedes Schülers gespeichert wird
-    // <SchülerID, List<KompetenzID>>
-    private Map<Long, List<Long>> schuelerKompetenzen;
+    // <Schüler, List<KompetenzID>>
+    private Map<Person, List<Long>> schuelerKompetenzen;
 
     private long projektplatzid;
 
     @RequestMapping(path = "/match", method = RequestMethod.GET)
-    public Map<Long, String> matchStudents() {
+    public List<ProjektPlatz> matchStudents() {
         students = new ArrayList<>();
         projektplatzid = 0;
 
@@ -55,12 +50,8 @@ public class Match {
 
         int plaetze = projekte.stream().mapToInt(p -> (int) p.getMaxSchueler()).sum();
         if(plaetze != students.size()){
-//            return new HashMap<Long, String>(){{
-//                put(-1L, String.format("Fehler, %d Plätze für %d Schüler!", plaetze, students.size()));
-//            }};
-            return new HashMap<>();
+            throw new InputMismatchException(String.format("%d Projektplätze für %d Schüler", plaetze, students.size()));
         }
-
 
         schuelerKompetenzen = getStudentKompetenzList();
 
@@ -70,10 +61,9 @@ public class Match {
 
         Map<ProjektPlatz, Person> match = match(students, schuelerPraeferenzen, projektPraeferenzen);
 
-        Map<Long, String> ret = new HashMap<>();
-        match.forEach((k, v) -> ret.put(k.projektPlatzID, v.getDisplayName()));
+        match.forEach((k, v) -> k.schuelerID = v.getId());
 
-        return ret;
+        return projektPraeferenzen;
     }
 
     private List<ProjektPlatz> projektPlaetzeGenerieren(List<Projekt> projekte) {
@@ -94,9 +84,9 @@ public class Match {
     private List<SchuelerPlatz> schuelerPlaetzeGenerieren(List<ProjektPlatz> projektPlaetze) {
         List<SchuelerPlatz> plaetze = new ArrayList<>();
 
-        for (Long schueler : schuelerKompetenzen.keySet()) {
-            List<ProjektPlatz> order = preferredProjectOrder(personRepository.findById(schueler).get(), projektPlaetze);
-            plaetze.add(new SchuelerPlatz(schueler, order.toArray(new ProjektPlatz[0])));
+        for (Person schueler : schuelerKompetenzen.keySet()) {
+            List<ProjektPlatz> order = preferredProjectOrder(schueler, projektPlaetze);
+            plaetze.add(new SchuelerPlatz(schueler.getId(), order.toArray(new ProjektPlatz[0])));
         }
 
         return plaetze;
@@ -106,7 +96,7 @@ public class Match {
         // Map in der die Eignung für das Projekt jedes Schülers gespeichert wird
         // Wenn der Schüler die gewünschte Kompetenz nicht besitzt, bekommt er einen default Wert 99
         // <SchülerID, Eignung>
-        Map<ProjektPlatz, Long> rangOrdnung = getProjectSuitability(schueler.getId(), projektPlaetze);
+        Map<ProjektPlatz, Long> rangOrdnung = getProjectSuitability(schueler, projektPlaetze);
 
         // Map der Projekte anhand des Wertes sortieren
         Map<ProjektPlatz, Long> sorted = rangOrdnung
@@ -118,12 +108,12 @@ public class Match {
         return new ArrayList<>(sorted.keySet());
     }
 
-    private Map<ProjektPlatz, Long> getProjectSuitability(long schuelerID, List<ProjektPlatz> projektPlaetze) {
+    private Map<ProjektPlatz, Long> getProjectSuitability(Person schueler, List<ProjektPlatz> projektPlaetze) {
         // Map<ProjektPlatz, Eignung>
         Map<ProjektPlatz, Long> rangOrdnung = new HashMap<>();
         for (ProjektPlatz projekt : projektPlaetze) {
-            if (schuelerKompetenzen.get(schuelerID).contains(projekt.kompetenzID)) {
-                for (Qualifikation schuelerQualifikation : personRepository.findById(schuelerID).get().getQualifikationen()) {
+            if (schuelerKompetenzen.get(schueler).contains(projekt.kompetenzID)) {
+                for (Qualifikation schuelerQualifikation : schueler.getQualifikationen()) {
                     if (schuelerQualifikation.getKompetenz().getId().equals(projekt.kompetenzID))
                         rangOrdnung.put(projekt, Integer.toUnsignedLong(Math.abs(anforderungRepository.findById(projekt.anforderungID).get().getAusmass() - schuelerQualifikation.getAusmass())));
                 }
@@ -151,31 +141,37 @@ public class Match {
     }
 
     private Map<Long, Long> getStudentSuitability(Anforderung anforderung) {
+        Long anforderungKompetenzId = anforderung.getKompetenz().getId();
+        int anforderungAusmass = anforderung.getAusmass();
         // Map<SchülerID, Eignung>
         Map<Long, Long> rangOrdnung = new HashMap<>();
-        for (Long id : schuelerKompetenzen.keySet()) {
-            if (schuelerKompetenzen.get(id).contains(anforderung.getKompetenz().getId())) {
-                for (Qualifikation schuelerQualifikation : personRepository.findById(id).get().getQualifikationen()) {
-                    if (schuelerQualifikation.getKompetenz().getId().equals(anforderung.getKompetenz().getId()))
-                        rangOrdnung.put(id, Integer.toUnsignedLong(Math.abs(anforderung.getAusmass() - schuelerQualifikation.getAusmass())));
+        for (Person schueler : schuelerKompetenzen.keySet()) {
+            if (schuelerKompetenzen.get(schueler).contains(anforderungKompetenzId)) {
+                for (Qualifikation schuelerQualifikation : schueler.getQualifikationen()) {
+                    if (schuelerQualifikation.getKompetenz().getId().equals(anforderungKompetenzId))
+                        rangOrdnung.put(schueler.getId(), Integer.toUnsignedLong(Math.abs(anforderungAusmass - schuelerQualifikation.getAusmass())));
                 }
             } else {
-                rangOrdnung.put(id, 99L);
+                rangOrdnung.put(schueler.getId(), 99L);
             }
         }
         return rangOrdnung;
     }
 
-    private Map<Long, List<Long>> getStudentKompetenzList() {
-        Map<Long, List<Long>> schuelerKompetenzen = new HashMap<>();
+    private Map<Person, List<Long>> getStudentKompetenzList() {
+        Map<Person, List<Long>> schuelerKompetenzen = new HashMap<>();
         students.forEach(schueler -> {
-            for (Qualifikation qualifikation : schueler.getQualifikationen()) {
-                if (!schuelerKompetenzen.containsKey(schueler.getId())) {
-                    schuelerKompetenzen.put(schueler.getId(), Collections.singletonList(qualifikation.getKompetenz().getId()));
+            Qualifikation[] schuelerQualifikationen = schueler.getQualifikationen().toArray(new Qualifikation[0]);
+            if(schuelerQualifikationen.length == 0) {
+                schuelerKompetenzen.put(schueler, Collections.singletonList(null));
+            }
+            for (Qualifikation qualifikation : schuelerQualifikationen) {
+                if (!schuelerKompetenzen.containsKey(schueler)) {
+                    schuelerKompetenzen.put(schueler, Collections.singletonList(qualifikation.getKompetenz().getId()));
                 } else {
-                    List<Long> temp = new ArrayList<>(schuelerKompetenzen.get(schueler.getId()));
+                    List<Long> temp = new ArrayList<>(schuelerKompetenzen.get(schueler));
                     temp.add(qualifikation.getKompetenz().getId());
-                    schuelerKompetenzen.put(schueler.getId(), temp);
+                    schuelerKompetenzen.put(schueler, temp);
                 }
             }
         });
@@ -269,4 +265,3 @@ class SchuelerPlatz {
         return preferredOrder;
     }
 }
-
