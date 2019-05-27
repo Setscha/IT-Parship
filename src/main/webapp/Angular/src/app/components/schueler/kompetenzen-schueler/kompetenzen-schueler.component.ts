@@ -8,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class KompetenzenSchuelerComponent implements OnInit {
 
   qualifikationen = [
-      new Qualifikation(1, 'Audio', 10),
-      new Qualifikation(2, 'Vidio', 8),
-      new Qualifikation(3, 'Fotoio', 4),
-
+      new Qualifikation(1, 'Video', 10),
+      new Qualifikation(2, 'Audio', 8),
+      new Qualifikation(3, 'Angular', 4),
+      new Qualifikation(4, 'Java', 3),
+      new Qualifikation(5, 'Design', 6),
+      new Qualifikation(6, 'PHP', 4),
   ];
 
   constructor() { }
