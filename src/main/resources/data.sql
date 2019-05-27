@@ -7,16 +7,16 @@ insert into kompetenz (id, version, beschreibung) values (2, 0, 'Audio');
 insert into kompetenz (id, version, beschreibung) values (3, 0, 'Programmieren');
 insert into kompetenz (id, version, beschreibung) values (4, 0, 'Raspberry');
 
-insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (2, 0, 5, 2, 1);
-insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (3, 0, 3, 3, 1);
-insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (4, 0, 5, 4, 1);
-insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (5, 0, 6, 3, 2);
-insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (6, 0, 8, 4, 2);
-insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (7, 0, 2, 1, 2);
-insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (8, 0, 8, 2, 2);
-insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (9, 0, 8, 1, 3);
-insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (10, 0, 6, 2, 3);
-insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (11, 0, 2, 3, 3);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (1, 0, 5, 2, 1);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (2, 0, 3, 3, 1);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (3, 0, 5, 4, 1);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (4, 0, 6, 3, 2);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (5, 0, 8, 4, 2);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (6, 0, 2, 1, 2);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (7, 0, 8, 2, 2);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (8, 0, 8, 1, 3);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (9, 0, 6, 2, 3);
+insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (10, 0, 2, 3, 3);
 
 
 insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID) values (1, 0, 'Seczer Tobias',	'6159@htl.rennweg.at', null);

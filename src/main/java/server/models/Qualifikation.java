@@ -1,6 +1,7 @@
 package server.models;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -13,7 +14,7 @@ public class Qualifikation extends Persistent {
     @ManyToOne
     private Person person;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Kompetenz kompetenz;
 
     public int getAusmass() {
@@ -28,7 +29,6 @@ public class Qualifikation extends Persistent {
     public Person getPerson() {
         return person;
     }
-
 
     /**
      * Aktualisiert beide Seiten der @ManyToOne-Beziehung.

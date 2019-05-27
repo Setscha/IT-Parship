@@ -39,7 +39,7 @@ public class Match {
     private long projektplatzid;
 
     @RequestMapping(path = "/match", method = RequestMethod.GET)
-    public List<ProjektPlatz> matchStudents() {
+    public boolean matchStudents() {
         students = new ArrayList<>();
         projektplatzid = 0;
 
@@ -48,7 +48,7 @@ public class Match {
 
         personRepository.findAll().forEach(students::add);
 
-        int plaetze = projekte.stream().mapToInt(p -> (int) p.getMaxSchueler()).sum();
+        int plaetze = projekte.stream().mapToInt(Projekt::getMaxSchueler).sum();
         if(plaetze != students.size()){
             throw new InputMismatchException(String.format("%d Projektplätze für %d Schüler", plaetze, students.size()));
         }
@@ -63,13 +63,19 @@ public class Match {
 
         match.forEach((k, v) -> k.schuelerID = v.getId());
 
-        return projektPraeferenzen;
+        projektPraeferenzen.forEach(projektPlatz -> {
+            Person schueler = personRepository.findById(projektPlatz.schuelerID).get();
+            schueler.setProjekt(projektRepository.findById(projektPlatz.projektID).get());
+            personRepository.save(schueler);
+        });
+
+        return true;
     }
 
     private List<ProjektPlatz> projektPlaetzeGenerieren(List<Projekt> projekte) {
         List<ProjektPlatz> plaetze = new ArrayList<>();
         for (Projekt p : projekte) {
-            int verfuegbar = (int) p.getMaxSchueler();
+            int verfuegbar = p.getMaxSchueler();
             List anforderungen = Lists.newArrayList(p.getAnforderungen());
             anforderungen.sort(Comparator.comparingInt(Anforderung::getAusmass).reversed());
             for (int i = 0; i < verfuegbar; i++) {
