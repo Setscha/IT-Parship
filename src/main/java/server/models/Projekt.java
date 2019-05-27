@@ -1,8 +1,9 @@
 package server.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
 @Entity
@@ -12,11 +13,14 @@ public class Projekt extends Persistent {
     private String beschreibung;
     private Integer maxSchueler;
 
-    @OneToMany(mappedBy = "projekt", fetch = FetchType.EAGER)
+
+
+    @OneToMany(mappedBy = "projekt")
     private Set<Person> personas;
 
-    @OneToMany(mappedBy = "projekt", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "projekt", cascade = CascadeType.ALL)
     private Set<Anforderung> anforderungen;
+
 
     public String getName() {
         return name;
@@ -34,7 +38,7 @@ public class Projekt extends Persistent {
         this.beschreibung = beschreibung;
     }
 
-    public Number getMaxSchueler() {
+    public Integer getMaxSchueler() {
         return maxSchueler;
     }
 
@@ -42,19 +46,29 @@ public class Projekt extends Persistent {
         this.maxSchueler = maxSchueler;
     }
 
+
     public Set<Person> getPersonas() {
         return personas;
     }
 
+
+    /**
+     * Aktualisiert beide Seiten der @OneToMany-Beziehung.
+     */
     public void setPersonas(Set<Person> personas) {
-        this.personas = personas;
+        this.personas = setOneToMany(personas, Person::setProjekt, Projekt::getPersonas);
     }
+
 
     public Set<Anforderung> getAnforderungen() {
         return anforderungen;
     }
 
+
+    /**
+     * Aktualisiert beide Seiten der @OneToMany-Beziehung.
+     */
     public void setAnforderungen(Set<Anforderung> anforderungen) {
-        this.anforderungen = anforderungen;
+        this.anforderungen = setOneToMany(anforderungen, Anforderung::setProjekt, Projekt::getAnforderungen);
     }
 }
