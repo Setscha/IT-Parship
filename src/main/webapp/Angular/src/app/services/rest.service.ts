@@ -6,6 +6,7 @@ import { isArray } from "rxjs/internal/util/isArray";
 import { isObject } from "rxjs/internal/util/isObject";
 import { catchError, map } from "rxjs/internal/operators";
 import { of } from "rxjs/index";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Injectable({
   providedIn: 'root'
@@ -205,9 +206,13 @@ export class RestService {
     } else if (isObject(obj)) {
       // Verlinkte Objekte suchen und durch ihre self-Links ersetzen
       Object.keys(obj).forEach(k => {
-        if (obj[k] && obj[k]['_links'] && obj[k]['_links']['self']) {
-          // Templates aus Link entfernen
-          obj[k] = obj[k]['_link']['self']['href'].replace(/\{.*\}$/, "");
+        if(isArray(obj[k])){
+          this.entitiesVerlinken(obj[k]);
+        }else {
+          if (obj[k] && obj[k]['_links'] && obj[k]['_links']['self']) {
+            // Templates aus Link entfernen
+            obj[k] = obj[k]['_link']['self']['href'].replace(/\{.*\}$/, "");
+          }
         }
       });
     }
