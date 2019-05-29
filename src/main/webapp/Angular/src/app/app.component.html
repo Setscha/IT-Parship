@@ -1,1 +1,6 @@
-<app-main-nav-lehrer></app-main-nav-lehrer>
+<div *ngIf="istAngemeldet; else login">
+  <app-main-nav-schueler></app-main-nav-schueler>
+</div>
+<ng-template #login>
+  <app-login></app-login>
+</ng-template>

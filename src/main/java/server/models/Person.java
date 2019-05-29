@@ -3,17 +3,22 @@ package server.models;
 import at.rennweg.htl.sew.autoconfig.UserInfo;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
 public class Person extends Persistent implements UserInfo {
 
+    @Column(unique = true)
     private String username;
 
     private String displayName;
 
     @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
     private Set<Qualifikation> qualifikationen;
+
+    @NotNull
+    private String role;
 
     @Transient
     private String password;
@@ -71,4 +76,13 @@ public class Person extends Persistent implements UserInfo {
         this.qualifikationen = setOneToMany(qualifikationen, Qualifikation::setPerson, Person::getQualifikationen);
     }
 
+    @Override
+    public String getRole() {
+        return role;
+    }
+
+    @Override
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

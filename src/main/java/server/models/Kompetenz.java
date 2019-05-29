@@ -12,6 +12,9 @@ public class Kompetenz extends Persistent {
     @OneToMany(mappedBy = "kompetenz")
     private Set<Qualifikation> qualifikationen;
 
+    @OneToMany(mappedBy = "kompetenz")
+    private Set<Anforderung> anforderungen;
+
     public String getBeschreibung() {
         return beschreibung;
     }
@@ -25,11 +28,21 @@ public class Kompetenz extends Persistent {
         return qualifikationen;
     }
 
+    public Set<Anforderung> getAnforderungen() {
+        return anforderungen;
+    }
 
     /**
      * Aktualisiert beide Seiten der @OneToMany-Beziehung.
      */
     public void setQualifikationen(Set<Qualifikation> qualifikationen) {
         this.qualifikationen = setOneToMany(qualifikationen, Qualifikation::setKompetenz, Kompetenz::getQualifikationen);
+    }
+
+    /**
+     * Aktualisiert beide Seiten der @OneToMany-Beziehung.
+     */
+    public void setAnforderungen(Set<Anforderung> anforderungen) {
+        this.anforderungen = setOneToMany(anforderungen, Anforderung::setKompetenz, Kompetenz::getAnforderungen);
     }
 }

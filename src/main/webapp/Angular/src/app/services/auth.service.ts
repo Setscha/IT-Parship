@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { CookieService } from "ngx-cookie-service";
+import {catchError, map} from "rxjs/internal/operators";
+import {Observable, of} from "rxjs/index";
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +23,10 @@ export class AuthService {
    * Entity der angemeldeten Benutzerin, oder undefined, wenn niemand angemeldet ist.
    */
   private user;
-  /*user() {
+
+  getUser() {
     return this.user
-  };*/
+  };
 
   /**
    * Setzt die Authentifizierungsdaten für einen Benutzer oder löscht sie,
@@ -33,7 +36,7 @@ export class AuthService {
     this.user = user_;
     this.OPTIONS = {
       headers: new HttpHeaders({
-        TOKEN_HEADER: token
+        [this.TOKEN_HEADER]: token
       })
     };
   };
@@ -91,10 +94,10 @@ export class AuthService {
    * Wenn ein Session-Cookie vorhanden ist, wird vorher versucht, sich damit
    * zu authentifizieren.
    */
-  istAngemeldet() {
+  istAngemeldet(): Observable<any> {
     if (this.user) {
       //$log.debug("AuthService.istAngemeldet(), user:", user);
-      return Promise.resolve(this.user);
+      return of(this.user);
 
     } else {
       let token = this.cookies.get(this.SESSION_COOKIE);
@@ -104,25 +107,24 @@ export class AuthService {
 
         this.authentifizieren(undefined, token);
         return this.http
-          .get(this.ME)
-          .toPromise()
-          .then(response => {
-            //$log.debug("AuthService.istAngemeldet(), user:", response.data);
-
-            this.authentifizieren(response['data'], token);
-            return Promise.resolve(this.user);
-          })
-          .catch(() => {
+          .get(this.ME, this.OPTIONS)
+          .pipe(
+            catchError((e => {
             //$log.debug("AuthService.istAngemeldet(), kein user");
 
             this.authentifizieren(undefined, undefined);
-            return Promise.reject();
-          });
+            return of(null);
+          })),
+            map(response => {
+            console.log(response);
+            this.authentifizieren(response, token);
+            return this.user;
+          }));
 
       } else {
         //$log.debug("AuthService.istAngemeldet(), kein user");
 
-        return Promise.reject();
+        return of(null);
       }
     }
   };

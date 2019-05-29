@@ -53,7 +53,7 @@ import { KompetenzComponent } from './components/lehrer/kompetenz/kompetenz.comp
     DeleteProjektDialogComponent,
     QualifikationComponent,
     KompetenzenComponent,
-    KompetenzComponent
+    KompetenzComponent,
   ],
   imports: [
     BrowserModule,
