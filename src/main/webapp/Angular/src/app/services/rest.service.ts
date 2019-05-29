@@ -121,6 +121,8 @@ export class RestService {
    * Liefert ein Promise auf die aktuelle Version der Entity.
    */
   speichern(entity) {
+    console.log(entity);
+
     // Stammt die Entity vom Server, oder wurde sie lokal erzeugt?
     if (entity['_links'] && entity['_links']['self']) {
       // Entity wurde schon einmal vom Server geladen, aktualisieren

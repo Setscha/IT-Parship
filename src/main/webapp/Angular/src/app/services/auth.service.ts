@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { CookieService } from "ngx-cookie-service";
-import {catchError, map} from "rxjs/internal/operators";
+import {catchError, finalize, map} from "rxjs/internal/operators";
 import {Observable, of} from "rxjs/index";
 
 @Injectable({
@@ -72,18 +72,17 @@ export class AuthService {
   logout() {
     return this.http
       .post(this.LOGOUT, {})
-      .toPromise()
-      .then(response => {
-        //$log.debug("AuthService.logout(): OK");
-        return Promise.resolve(response);
-      })
-      .catch(response => {
-        //$log.error("AuthService.logout(): Fehler", response);
-        return Promise.reject(response);
-      })
-      .finally(() => {
-        this.authentifizieren(undefined, undefined);
-      });
+      .pipe(
+        catchError(() => {
+          return of(null);
+        }),
+        map(() => {
+          return of(true);
+        }),
+        finalize(() => {
+          this.authentifizieren(undefined, undefined);
+        })
+      );
   };
 
 
@@ -96,34 +95,25 @@ export class AuthService {
    */
   istAngemeldet(): Observable<any> {
     if (this.user) {
-      //$log.debug("AuthService.istAngemeldet(), user:", user);
       return of(this.user);
-
     } else {
       let token = this.cookies.get(this.SESSION_COOKIE);
 
       if (token) {
-        //$log.debug("AuthService.istAngemeldet(), token:", token);
-
         this.authentifizieren(undefined, token);
         return this.http
           .get(this.ME, this.OPTIONS)
           .pipe(
             catchError((e => {
-            //$log.debug("AuthService.istAngemeldet(), kein user");
-
-            this.authentifizieren(undefined, undefined);
-            return of(null);
+              this.authentifizieren(undefined, undefined);
+              return of(null);
           })),
             map(response => {
-            console.log(response);
-            this.authentifizieren(response, token);
-            return this.user;
+              this.authentifizieren(response, token);
+              return this.user;
           }));
 
       } else {
-        //$log.debug("AuthService.istAngemeldet(), kein user");
-
         return of(null);
       }
     }

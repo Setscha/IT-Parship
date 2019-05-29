@@ -20,7 +20,11 @@
               *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Schüler</span>
+      <span style="flex: auto;">Schüler</span>
+      <span style="margin-right: 10px; font-size: 0.85em;">{{user.displayName}}</span>
+      <button mat-icon-button (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
