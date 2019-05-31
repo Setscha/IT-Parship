@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-kompetenzen-schueler',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./kompetenzen-schueler.component.scss']
 })
 export class KompetenzenSchuelerComponent implements OnInit {
+
+  user;
 
   qualifikationen = [
       new Qualifikation(1, 'Video', 10),
@@ -16,9 +19,10 @@ export class KompetenzenSchuelerComponent implements OnInit {
       new Qualifikation(6, 'PHP', 4),
   ];
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
+    this.user = this.auth.getUser();
   }
 
 }

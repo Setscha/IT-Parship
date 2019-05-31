@@ -7,6 +7,7 @@ import { isObject } from "rxjs/internal/util/isObject";
 import { catchError, map } from "rxjs/internal/operators";
 import { of } from "rxjs/index";
 import {forEach} from "@angular/router/src/utils/collection";
+import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,13 @@ import {forEach} from "@angular/router/src/utils/collection";
 export class RestService {
 
   API_PFAD = "http://localhost:8081/api/";
+  TOKEN_HEADER = "x-auth-token";
+  SESSION_COOKIE = "SESSION";
+
 
   constructor(private http: HttpClient,
-              private snackbar: MatSnackBar) { }
+              private snackbar: MatSnackBar,
+              private cookies: CookieService) { }
 
   /**
    * Liefert ein Promise auf eine Seite von Entities der
@@ -160,6 +165,15 @@ export class RestService {
         );
     }
   };
+
+  match() {
+    let token = this.cookies.get(this.SESSION_COOKIE);
+    return this.http
+      .get(this.API_PFAD + 'match', {headers: {[this.TOKEN_HEADER]: token}})
+      .pipe(
+        catchError(error => this.fehlerBehandeln(error))
+      );
+  }
 
 
   /**

@@ -48,7 +48,10 @@ public class Match {
         List<Projekt> projekte = new ArrayList<>();
         projektRepository.findAll().forEach(projekte::add);
 
-        personRepository.findAll().forEach(students::add);
+        personRepository.findAll().forEach(s -> {
+            if(s.getRole().equals("ROLE_USER"))
+                students.add(s);
+        });
 
         int plaetze = projekte.stream().mapToInt(Projekt::getMaxSchueler).sum();
         if(plaetze != students.size()){
