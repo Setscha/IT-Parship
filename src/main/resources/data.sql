@@ -30,7 +30,7 @@ insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (10
 insert into anforderung (id, version, ausmass, kompetenz_id, projekt) values (11, 0, 3, 6, 4);
 
 
-insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID, ROLE) values (1, 0, 'Seczer Tobias',	'6159@htl.rennweg.at', null, 'ROLE_USER');
+-- insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID, ROLE) values (1, 0, 'Seczer Tobias',	'6159@htl.rennweg.at', null, 'ROLE_USER');
 insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID, ROLE) values (2, 0, 'Kisling Daniel',	'6152@htl.rennweg.at', null, 'ROLE_USER');
 insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID, ROLE) values (3, 0, 'Ott Dominik',	'6158@htl.rennweg.at', null, 'ROLE_USER');
 insert into person(id, version, DISPLAY_NAME, USERNAME, PROJEKT_ID, ROLE) values (4, 0, 'Inführ Tobias',	'7159@htl.rennweg.at', null, 'ROLE_USER');
@@ -57,12 +57,12 @@ insert into person (id, version, display_name, USERNAME, PROJEKT_ID, ROLE) value
 
 
 -- region Qualifikationen
-insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (1, 0, 1, 1, 1);
-insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (2, 0, 4, 2, 1);
-insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (3, 0, 4, 3, 1);
-insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (4, 0, 1, 4, 1);
-insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (5, 0, 7, 5, 1);
-insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (6, 0, 6, 6, 1);
+-- insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (1, 0, 1, 1, 1);
+-- insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (2, 0, 4, 2, 1);
+-- insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (3, 0, 4, 3, 1);
+-- insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (4, 0, 1, 4, 1);
+-- insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (5, 0, 7, 5, 1);
+-- insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (6, 0, 6, 6, 1);
 insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (7, 0, 4, 1, 2);
 insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (8, 0, 4, 2, 2);
 insert into QUALIFIKATION (id, version, ausmass, kompetenz_id, person_id) values (9, 0, 10, 3, 2);

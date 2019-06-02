@@ -7,7 +7,6 @@ import {SettingsAdminComponent} from './components/admin/settings-admin/settings
 import {SchuelerAdminComponent} from './components/admin/schueler-admin/schueler-admin.component';
 import {ProjekteSchuelerComponent} from './components/schueler/projekte-schueler/projekte-schueler.component';
 import {KompetenzenSchuelerComponent} from './components/schueler/kompetenzen-schueler/kompetenzen-schueler.component';
-import {SettingsSchuelerComponent} from './components/schueler/settings-schueler/settings-schueler.component';
 import {KompetenzenComponent} from "./components/lehrer/kompetenzen/kompetenzen.component";
 import {MatchComponent} from "./components/lehrer/match/match.component";
 
@@ -18,8 +17,7 @@ const routes: Routes = [
     {path: 'settingsAdmin', component: SettingsAdminComponent},
     {path: 'schuelerAdmin', component: SchuelerAdminComponent},
     {path: 'projekteSchueler', component: ProjekteSchuelerComponent},
-    {path: 'kompetenzenSchueler', component: KompetenzenSchuelerComponent},
-    {path: 'settingsSchueler', component: SettingsSchuelerComponent},
+    {path: 'qualifikationen', component: KompetenzenSchuelerComponent},
     {path: 'kompetenzen', component: KompetenzenComponent},
     {path: 'match', component: MatchComponent}
 
@@ -32,5 +30,5 @@ const routes: Routes = [
 export class AppRoutingModule { }
 export const routingComponents = [ProjekteLehrerComponent,
                                     KlassenAdminComponent, ProjekteAdminComponent, SettingsAdminComponent,
-                                    SchuelerAdminComponent, ProjekteSchuelerComponent, SettingsSchuelerComponent,
+                                    SchuelerAdminComponent, ProjekteSchuelerComponent,
                                     KompetenzenSchuelerComponent];

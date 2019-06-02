@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { CookieService } from "ngx-cookie-service";
 import {catchError, finalize, map} from "rxjs/internal/operators";
 import {Observable, of} from "rxjs/index";
+import {isObject} from "rxjs/internal/util/isObject";
+import {isArray} from "rxjs/internal/util/isArray";
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +30,31 @@ export class AuthService {
     return this.user
   };
 
+  embeddedAufloesen(obj) {
+    let embedded;
+
+    if (isArray(obj)) {
+      // Arrayelemente umstrukturieren
+      obj.forEach(e => this.embeddedAufloesen(e));
+
+    } else if (isObject(obj) && (embedded = obj['_embedded'])) {
+      // Inhalte von _embedded in diesem Objekt platzieren
+      Object.keys(embedded).forEach(k => {
+        obj[k] = embedded[k];
+        this.embeddedAufloesen(obj[k]);
+      });
+      delete obj['_embedded'];
+    }
+
+    return obj;
+  }
+
   /**
    * Setzt die Authentifizierungsdaten für einen Benutzer oder löscht sie,
    * wenn kein Argumente angegeben sind.
    */
   authentifizieren(user_, token) {
+    user_ = this.embeddedAufloesen(user_);
     this.user = user_;
     this.OPTIONS = {
       headers: new HttpHeaders({

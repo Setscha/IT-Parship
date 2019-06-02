@@ -5,8 +5,8 @@
     <mat-card-subtitle>Qualifikationen</mat-card-subtitle>
   </mat-card-header>
 
-  <mat-list>
-    <mat-list-item *ngFor="let q of qualifikationen" >
+  <mat-list *ngIf="qualifikationen as qualis">
+    <mat-list-item *ngFor="let q of qualis" >
       <app-qualifikation [qualifikation]="q" style="width: 100%;"></app-qualifikation>
     </mat-list-item>
   </mat-list>

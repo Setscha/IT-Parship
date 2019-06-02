@@ -1,7 +1,6 @@
 package server.models;
 
 import at.rennweg.htl.sew.autoconfig.UserInfo;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
@@ -14,7 +13,7 @@ public class Person extends Persistent implements UserInfo {
 
     private String displayName;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Qualifikation> qualifikationen;
 
     @NotNull
