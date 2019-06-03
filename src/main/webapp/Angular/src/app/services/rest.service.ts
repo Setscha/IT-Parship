@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { MatSnackBar } from "@angular/material";
-import { Seite } from "../models/seite";
-import { isArray } from "rxjs/internal/util/isArray";
-import { isObject } from "rxjs/internal/util/isObject";
-import { catchError, map } from "rxjs/internal/operators";
-import { of } from "rxjs/index";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {MatSnackBar} from "@angular/material";
+import {Seite} from "../models/seite";
+import {isArray} from "rxjs/internal/util/isArray";
+import {isObject} from "rxjs/internal/util/isObject";
+import {catchError, map} from "rxjs/internal/operators";
+import {of} from "rxjs/index";
 import {forEach} from "@angular/router/src/utils/collection";
 import {CookieService} from "ngx-cookie-service";
 
@@ -21,7 +21,8 @@ export class RestService {
 
   constructor(private http: HttpClient,
               private snackbar: MatSnackBar,
-              private cookies: CookieService) { }
+              private cookies: CookieService) {
+  }
 
   /**
    * Liefert ein Promise auf eine Seite von Entities der
@@ -47,10 +48,10 @@ export class RestService {
     let pfad = query
       ? `${this.API_PFAD}${konstruktor.path}/search/${query}`
       : `${this.API_PFAD}${konstruktor.path}`,
-      params = Object.assign({ page: seitenNr }, parameter);
+      params = Object.assign({page: seitenNr}, parameter);
 
     return this.http
-      .get(pfad, { params: params })
+      .get(pfad, {params: params})
       .pipe(
         catchError(error => this.fehlerBehandeln(error)),
         map(response => {
@@ -65,11 +66,11 @@ export class RestService {
             // Letzte vorhandene Seite ausliefern
             return this.seiteLaden(
               konstruktor,
-              response['page']['totalPages']-1,
+              response['page']['totalPages'] - 1,
               params,
               query);
           }
-      }));
+        }));
   };
 
   /**
@@ -85,7 +86,7 @@ export class RestService {
    */
   laden(konstruktor, url, parameter) {
     return this.http
-      .get(url, { params: parameter })
+      .get(url, {params: parameter})
       .pipe(
         catchError(error => this.fehlerBehandeln(error)),
         map(data => {
@@ -107,12 +108,12 @@ export class RestService {
     // Stammt die Entity vom Server, oder wurde sie lokal erzeugt?
     if (entity['_links'] && entity['_links']['self']) {
       return this.http
-        .delete(entity['_links']['self']['href'], { headers: { "If-Match": entity['etag'] } })
+        .delete(entity['_links']['self']['href'], {headers: {"If-Match": entity['etag']}})
         .pipe(catchError(error => this.fehlerBehandeln(error)));
 
     } else {
       // Entity stammt nicht vom Server und kann dort nicht gelöscht werden
-      this.fehlerBehandeln({ status: 404, statusText: "Not found", data: {} });
+      this.fehlerBehandeln({status: 404, statusText: "Not found", data: {}});
       return of(null);
     }
   };
@@ -126,7 +127,7 @@ export class RestService {
    * Liefert ein Promise auf die aktuelle Version der Entity.
    */
   speichern(entity) {
-    console.log(entity);
+    // console.warn(this.entitiesVerlinken(entity, false));
 
     // Stammt die Entity vom Server, oder wurde sie lokal erzeugt?
     if (entity['_links'] && entity['_links']['self']) {
@@ -136,8 +137,8 @@ export class RestService {
       return this.http
         .patch(
           entity['_links']['self']['href'],
-          entity,
-          { headers: { "If-Match": entity['etag'] } })
+          this.entitiesVerlinken(entity, false),
+          {headers: {"If-Match": entity['etag']}})
         .pipe(
           catchError(error => this.fehlerBehandeln(error)),
           map(response => {
@@ -153,7 +154,7 @@ export class RestService {
       //$log.debug("RestService.speichern(): insert", entity);
 
       return this.http
-        .post(`${this.API_PFAD}${entity.constructor.path}`, entity)
+        .post(`${this.API_PFAD}${entity.constructor.path}`, this.entitiesVerlinken(entity, false))
         .pipe(
           map(response => {
             //$log.debug("RestService.speichern(): insert OK", response);
@@ -213,24 +214,21 @@ export class RestService {
   /**
    * Ersetzt in den Request-Daten alle Entity-Objekte durch ihre self-Links.
    */
-  entitiesVerlinken(obj) {
+  entitiesVerlinken(obj, rekursiv) {
+    // console.log("Obj:", obj);
+    if(obj == undefined)
+      return undefined;
+    if (obj._links && obj._links.self && rekursiv) {
+      // Objekt durch Link ersetzen und Templates aus Link entfernen
+      return obj._links.self.href.replace(/\{.*\}$/, "");
 
-    if (isArray(obj)) {
-      // In Arrayelementen ersetzen
-      obj.forEach(e => this.entitiesVerlinken(e));
+    } else if (isArray(obj)) {
+      // Arrayelemente ersetzen
+      obj.forEach((e, i) => obj[i] = this.entitiesVerlinken(e, true));
 
     } else if (isObject(obj)) {
-      // Verlinkte Objekte suchen und durch ihre self-Links ersetzen
-      Object.keys(obj).forEach(k => {
-        if(isArray(obj[k])){
-          this.entitiesVerlinken(obj[k]);
-        }else {
-          if (obj[k] && obj[k]['_links'] && obj[k]['_links']['self']) {
-            // Templates aus Link entfernen
-            obj[k] = obj[k]['_link']['self']['href'].replace(/\{.*\}$/, "");
-          }
-        }
-      });
+      // Properties ersetzen
+      Object.keys(obj).forEach(k => obj[k] = this.entitiesVerlinken(obj[k], true));
     }
 
     return obj;

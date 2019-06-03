@@ -12,10 +12,10 @@ import {MatchComponent} from "./components/lehrer/match/match.component";
 
 const routes: Routes = [
     {path: 'projekteLehrer', component: ProjekteLehrerComponent},
-    {path: 'projekteAdmin', component: ProjekteAdminComponent},
-    {path: 'klassenAdmin', component: KlassenAdminComponent},
-    {path: 'settingsAdmin', component: SettingsAdminComponent},
-    {path: 'schuelerAdmin', component: SchuelerAdminComponent},
+    // {path: 'projekteAdmin', component: ProjekteAdminComponent},
+    // {path: 'klassenAdmin', component: KlassenAdminComponent},
+    // {path: 'settingsAdmin', component: SettingsAdminComponent},
+    // {path: 'schuelerAdmin', component: SchuelerAdminComponent},
     {path: 'projekteSchueler', component: ProjekteSchuelerComponent},
     {path: 'qualifikationen', component: KompetenzenSchuelerComponent},
     {path: 'kompetenzen', component: KompetenzenComponent},

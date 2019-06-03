@@ -30,6 +30,14 @@ export class AuthService {
     return this.user
   };
 
+  refreshUser() {
+    return this.http
+      .get("http://localhost:8081/api/me",  this.OPTIONS)
+      .pipe(map(v => {
+        this.user = v;
+      }));
+  }
+
   embeddedAufloesen(obj) {
     let embedded;
 
