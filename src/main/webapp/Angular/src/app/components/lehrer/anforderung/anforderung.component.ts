@@ -3,6 +3,7 @@ import {MatSnackBar} from '@angular/material';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RestService} from "../../../services/rest.service";
 import {Anforderung} from "../../../models/anforderung";
+import {forEach} from "../../../../../node_modules/@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-anforderung',
@@ -42,7 +43,21 @@ export class AnforderungComponent implements OnInit {
         prio: this.anforderung.prio,
         isEnabled: true
       });*/
-      //console.log(new Anforderung(this.anforderung));
+      console.log( "keooooookkkoooo ");
+      console.log(new Anforderung(this.anforderung));
+
+
+      this.kompetenzPool.subscribe(res=> {
+        res.entities.forEach(k => {
+          console.log(k);
+          if(k.beschreibung === this.anforderung.kompetenz.beschreibung){
+            this.anforderung.kompetenz = k;
+            console.log("gefunden");
+          }
+        })
+      });
+
+
       //this.anforderung._links.projekt = this.projektLink;
       this.rest.speichern(new Anforderung(this.anforderung)).subscribe(() => {
         console.log(new Anforderung(this.anforderung));

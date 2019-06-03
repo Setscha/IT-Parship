@@ -114,9 +114,9 @@ export class LehrerProjektComponent implements OnInit {
       console.log('The dialog was closed');
       console.log(result);
       if (typeof result !== 'undefined') {
-        //this.projekt.name = result.name;
-        //this.projekt.beschreibung = result.beschreibung;
-        //this.projekt.maxSchueler = result.maxSchueler;
+        this.projekt.name = result.name;
+        this.projekt.beschreibung = result.beschreibung;
+        this.projekt.maxSchueler = result.maxSchueler;
         this.rest.speichern(this.projekt).subscribe(() => {
           this.ngOnInit();
         });

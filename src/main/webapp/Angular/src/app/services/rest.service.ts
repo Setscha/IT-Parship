@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { MatSnackBar } from "@angular/material";
 import { Seite } from "../models/seite";
 import { isArray } from "rxjs/internal/util/isArray";
@@ -100,10 +100,14 @@ export class RestService {
 
     // Stammt die Entity vom Server, oder wurde sie lokal erzeugt?
     if (entity['_links'] && entity['_links']['self']) {
+      let url = entity['_links']['self']['href'];
+      if(url.includes('{?projection}')){
+        url = url.replace('{?projection}', '');
+      }
+      let headers = new HttpHeaders({'If-Match': '0'});
       return this.http
-        .delete(entity['_links']['self']['href'], { headers: { "If-Match": entity['etag'] } })
+        .delete(url, { headers })
         .pipe(catchError(error => this.fehlerBehandeln(error)));
-
     } else {
       // Entity stammt nicht vom Server und kann dort nicht gelöscht werden
       this.fehlerBehandeln({ status: 404, statusText: "Not found", data: {} });
@@ -124,12 +128,17 @@ export class RestService {
     if (entity['_links'] && entity['_links']['self']) {
       // Entity wurde schon einmal vom Server geladen, aktualisieren
       //$log.debug("RestService.speichern(): update", entity);
-
+      let etag = 0;
+      if(entity.etag !== undefined){
+        etag = entity.etag;
+      }
+      let headers = new HttpHeaders({'If-Match': etag});
+      console.log(this.entitiesVerlinken(entity));
+      console.log(entity);
       return this.http
         .patch(
-          entity['_links']['self']['href'],
-          entity,
-          { headers: { "If-Match": entity['etag'] } })
+          entity['_links']['self']['href'].replace(/\{.*\}$/, ""),
+          this.entitiesVerlinken(entity),{ headers: headers })
         .pipe(
           catchError(error => this.fehlerBehandeln(error)),
           map(response => {
@@ -196,23 +205,24 @@ export class RestService {
   /**
    * Ersetzt in den Request-Daten alle Entity-Objekte durch ihre self-Links.
    */
-  entitiesVerlinken(obj) {
+  entitiesVerlinken(obj, rekursiv) {
+    //console.log(obj);
+    if(obj !== undefined){
+      if (obj._links && obj._links.self && rekursiv) {
+        // Objekt durch Link ersetzen und Templates aus Link entfernen
+        return obj._links.self.href.replace(/\{.*\}$/, "");
 
-    if (isArray(obj)) {
-      // In Arrayelementen ersetzen
-      obj.forEach(e => this.entitiesVerlinken(e));
+      } else if (isArray(obj)) {
+        // Arrayelemente ersetzen
+        obj.forEach((e, i) => obj[i] = this.entitiesVerlinken(e, true));
 
-    } else if (isObject(obj)) {
-      // Verlinkte Objekte suchen und durch ihre self-Links ersetzen
-      Object.keys(obj).forEach(k => {
-        if (obj[k] && obj[k]['_links'] && obj[k]['_links']['self']) {
-          // Templates aus Link entfernen
-          obj[k] = obj[k]['_link']['self']['href'].replace(/\{.*\}$/, "");
-        }
-      });
+      } else if (isObject(obj)) {
+        // Properties ersetzen
+        Object.keys(obj).forEach(k => obj[k] = this.entitiesVerlinken(obj[k], true));
+      }
     }
-
     return obj;
+
   }
 
 }
