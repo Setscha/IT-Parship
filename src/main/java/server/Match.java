@@ -4,13 +4,12 @@ import org.glassfish.jersey.internal.guava.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import server.models.*;
-import server.repositories.AnforderungRepository;
-import server.repositories.PersonRepository;
-import server.repositories.ProjektRepository;
+import server.repositories.*;
 
 import java.util.*;
 import java.util.stream.Collectors;

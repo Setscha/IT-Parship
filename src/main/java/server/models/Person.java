@@ -1,8 +1,20 @@
 package server.models;
 
 import at.rennweg.htl.sew.autoconfig.UserInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import server.ApplicationListener;
+import server.Configuration;
+import server.Test;
+import server.repositories.KompetenzRepository;
+import server.repositories.QualifikationRepository;
+
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,7 +25,7 @@ public class Person extends Persistent implements UserInfo {
 
     private String displayName;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<Qualifikation> qualifikationen;
 
     @NotNull

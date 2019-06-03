@@ -12,7 +12,7 @@ public class Qualifikation extends Persistent {
     @NotNull
     private int ausmass;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Person person;
 
     @ManyToOne(fetch = FetchType.EAGER)
