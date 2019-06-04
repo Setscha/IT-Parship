@@ -23,25 +23,29 @@ export class KompetenzenSchuelerComponent implements OnInit {
 
     this.rest.seiteLaden(Kompetenz, 0, undefined, undefined).subscribe(data => {
       this.qualifikationen = data['entities'].map(k => {
-        Object.assign(k._links,
+        let quali = new Qualifikation(k);
+        Object.assign(quali,
               {
-                person: {href: this.user._links.person.href},
-                kompetenz: {href: k._links.self.href}
+                ausmass: 0,
+                person: this.user._links.person.href.replace(/\{.*\}$/, ""),
+                kompetenz: k._links.self.href.replace(/\{.*\}$/, "")
               });
-        return new Qualifikation(k);
+        delete quali._links;
+        delete quali.etag;
+        return quali;
       });
       if (this.user.qualifikationen) {
         this.user.qualifikationen = this.user.qualifikationen.map(q => {
-          Object.assign(q._links,
+          Object.assign(q,
                 {
-                  person: {href: this.user._links.person.href},
-                  kompetenz: {href: q._links.kompetenz.href}
+                  person: {href: this.user._links.person.href.replace(/\{.*\}$/, "")},
+                  kompetenz: {href: q._links.kompetenz.href.replace(/\{.*\}$/, "")}
                 });
           return new Qualifikation(q);
         });
         this.qualifikationen = this.mergeWithQualifikationen(this.qualifikationen, this.user.qualifikationen);
-        console.log(this.user.qualifikationen);
       }
+      // console.log(this.qualifikationen);
     });
   }
 
@@ -63,10 +67,7 @@ export class KompetenzenSchuelerComponent implements OnInit {
 
   save() {
     this.qualifikationen.forEach(qualifikation => {
-      console.log(qualifikation);
-      this.rest.speichern(qualifikation).subscribe(() => {
-        console.log("Done!");
-      });
+      this.rest.speichern(qualifikation).subscribe();
     });
   }
 

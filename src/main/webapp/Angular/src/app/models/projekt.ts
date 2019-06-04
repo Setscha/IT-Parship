@@ -5,6 +5,7 @@ export class Projekt {
   maxSchueler: number;
   name: string;
   anforderungen: [];
+  personas: [];
   _links: [];
   etag: any;
 
@@ -13,6 +14,7 @@ export class Projekt {
     this.beschreibung = values['beschreibung'];
     this.maxSchueler = values['maxSchueler'];
     this.anforderungen = values['anforderungen'] || [];
+    this.personas = values['personas'] || [];
     this._links = values['_links'];
     this.etag = values['etag'];
   }

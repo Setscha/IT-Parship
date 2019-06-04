@@ -48,7 +48,7 @@ public class Match {
         projektRepository.findAll().forEach(projekte::add);
 
         personRepository.findAll().forEach(s -> {
-            if(s.getRole().equals("ROLE_USER"))
+            if(!s.getRole().equals("ROLE_LEHRER"))
                 students.add(s);
         });
 

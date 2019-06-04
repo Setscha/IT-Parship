@@ -128,7 +128,6 @@ export class RestService {
    */
   speichern(entity) {
     // console.warn(this.entitiesVerlinken(entity, false));
-
     // Stammt die Entity vom Server, oder wurde sie lokal erzeugt?
     if (entity['_links'] && entity['_links']['self']) {
       // Entity wurde schon einmal vom Server geladen, aktualisieren
@@ -136,14 +135,15 @@ export class RestService {
 
       return this.http
         .patch(
-          entity['_links']['self']['href'],
+          entity['_links']['self']['href'].replace(/\{.*\}$/, ""),
           this.entitiesVerlinken(entity, false),
-          {headers: {"If-Match": entity['etag']}})
+          {headers: {"If-Match": entity['etag'] || 0}})
         .pipe(
           catchError(error => this.fehlerBehandeln(error)),
           map(response => {
             //$log.debug("RestService.speichern(): update OK", response);
             response = this.embeddedAufloesen(response);
+            console.log(response);
             // Aktualisierten Satz in eine Entity umwandeln
             return new entity.constructor(response);
           })
