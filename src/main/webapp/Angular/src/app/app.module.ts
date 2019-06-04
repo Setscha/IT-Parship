@@ -36,6 +36,8 @@ import { FormsModule } from '@angular/forms';
 import { CookieService } from "ngx-cookie-service";
 import { KompetenzenComponent } from './components/lehrer/kompetenzen/kompetenzen.component';
 import { KompetenzComponent } from './components/lehrer/kompetenz/kompetenz.component';
+import { NavComponent } from './components/general/nav/nav.component';
+import { MatchComponent } from './components/lehrer/match/match.component';
 
 
 @NgModule({
@@ -53,7 +55,9 @@ import { KompetenzComponent } from './components/lehrer/kompetenz/kompetenz.comp
     DeleteProjektDialogComponent,
     QualifikationComponent,
     KompetenzenComponent,
-    KompetenzComponent
+    KompetenzComponent,
+    NavComponent,
+    MatchComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 package server.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -11,7 +12,7 @@ public class Qualifikation extends Persistent {
     @NotNull
     private int ausmass;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Person person;
 
     @ManyToOne(fetch = FetchType.EAGER)

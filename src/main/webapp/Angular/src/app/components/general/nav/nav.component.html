@@ -1,0 +1,6 @@
+<div *ngIf="user.role == 'ROLE_LEHRER'; else student">
+  <app-main-nav-lehrer></app-main-nav-lehrer>
+</div>
+<ng-template #student>
+  <app-main-nav-schueler></app-main-nav-schueler>
+</ng-template>

@@ -3,13 +3,13 @@ package server;
 import org.glassfish.jersey.internal.guava.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.BasePathAwareController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import server.models.*;
-import server.repositories.AnforderungRepository;
-import server.repositories.PersonRepository;
-import server.repositories.ProjektRepository;
+import server.repositories.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,6 +39,7 @@ public class Match {
     private long projektplatzid;
 
     @RequestMapping(path = "/match", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('LEHRER')")
     public boolean matchStudents() {
         students = new ArrayList<>();
         projektplatzid = 0;
@@ -46,7 +47,10 @@ public class Match {
         List<Projekt> projekte = new ArrayList<>();
         projektRepository.findAll().forEach(projekte::add);
 
-        personRepository.findAll().forEach(students::add);
+        personRepository.findAll().forEach(s -> {
+            if(!s.getRole().equals("ROLE_LEHRER"))
+                students.add(s);
+        });
 
         int plaetze = projekte.stream().mapToInt(Projekt::getMaxSchueler).sum();
         if(plaetze != students.size()){
