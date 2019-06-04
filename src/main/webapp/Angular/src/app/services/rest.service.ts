@@ -124,14 +124,19 @@ export class RestService {
    * Liefert ein Promise auf die aktuelle Version der Entity.
    */
   speichern(entity) {
+    let etag = 0;
+    if(entity.etag !== undefined){
+      etag = entity.etag;
+    }
+
+
+
+    console.log(entity.kompetenz);
     // Stammt die Entity vom Server, oder wurde sie lokal erzeugt?
     if (entity['_links'] && entity['_links']['self']) {
       // Entity wurde schon einmal vom Server geladen, aktualisieren
       //$log.debug("RestService.speichern(): update", entity);
-      let etag = 0;
-      if(entity.etag !== undefined){
-        etag = entity.etag;
-      }
+
       let headers = new HttpHeaders({'If-Match': etag});
       console.log(this.entitiesVerlinken(entity));
       console.log(entity);

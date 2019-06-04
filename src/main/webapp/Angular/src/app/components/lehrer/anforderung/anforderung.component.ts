@@ -43,27 +43,32 @@ export class AnforderungComponent implements OnInit {
         prio: this.anforderung.prio,
         isEnabled: true
       });*/
-      console.log( "keooooookkkoooo ");
-      console.log(new Anforderung(this.anforderung));
 
+      let anf = JSON.parse(JSON.stringify(this.anforderung));
 
       this.kompetenzPool.subscribe(res=> {
         res.entities.forEach(k => {
-          console.log(k);
+          //console.log(k);
           if(k.beschreibung === this.anforderung.kompetenz.beschreibung){
-            this.anforderung.kompetenz = k;
-            console.log("gefunden");
+            anf.kompetenz = k._links.self.href;
+            console.log("gefunden " + anf.kompetenz);
+            console.log(anf);
+
+            this.rest.speichern(anf).subscribe(() => {
+              console.log("Das WILL IHC SEHEN ");
+              console.log(this.anforderung);
+              this.openSnackBar('Anforderung wurde gespeichert!', 'OK', 2000);
+
+            });
           }
         })
       });
 
 
       //this.anforderung._links.projekt = this.projektLink;
-      this.rest.speichern(new Anforderung(this.anforderung)).subscribe(() => {
-        console.log(new Anforderung(this.anforderung));
-        this.openSnackBar('Anforderung wurde gespeichert!', 'OK', 2000);
+      console.log("!!!!!!!!!!!!!!!!");
+      console.log(anf.kompetenz);
 
-      });
     }
   }
 
