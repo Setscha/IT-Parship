@@ -104,19 +104,14 @@ export class RestService {
    */
   loeschen(entity) {
     //$log.debug("RestService.loeschen()", entity);
-    let etag = 0;
-    if(entity.etag){
-      etag = entity.etag;
-    }
     // Stammt die Entity vom Server, oder wurde sie lokal erzeugt?
     if (entity['_links'] && entity['_links']['self']) {
       let url = entity['_links']['self']['href'];
       if(url.includes('{?projection}')){
         url = url.replace('{?projection}', '');
       }
-      let headers = new HttpHeaders({'If-Match': etag});
       return this.http
-        .delete(url, { headers: headers })
+        .delete(url, { headers: {"If-Match": entity['etag'] || 0}})
         .pipe(catchError(error => this.fehlerBehandeln(error)));
     } else {
       // Entity stammt nicht vom Server und kann dort nicht gelöscht werden
@@ -134,22 +129,14 @@ export class RestService {
    * Liefert ein Promise auf die aktuelle Version der Entity.
    */
   speichern(entity) {
-    let etag = 0;
-    if(entity.etag){
-      etag = entity.etag;
-    }
     // Stammt die Entity vom Server, oder wurde sie lokal erzeugt?
     if (entity['_links'] && entity['_links']['self']) {
       // Entity wurde schon einmal vom Server geladen, aktualisieren
-      //$log.debug("RestService.speichern(): update", entity);
 
-      let headers = new HttpHeaders({'If-Match': etag});
-      console.log(this.entitiesVerlinken(entity));
-      console.log(entity);
       return this.http
         .patch(
           entity['_links']['self']['href'].replace(/\{.*\}$/, ""),
-          this.entitiesVerlinken(entity, false),{ headers: headers })
+          this.entitiesVerlinken(entity, false), {headers: {"If-Match": entity['etag'] || 0}})
         .pipe(
           catchError(error => this.fehlerBehandeln(error)),
           map(response => {

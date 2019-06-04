@@ -2,7 +2,7 @@ import {Kompetenz} from "./kompetenz";
 
 export class Anforderung {
 
-  static path = "anforderung";
+  static path = "anforderungen";
   ausmass: number;
   kompetenz: Kompetenz;
   _links: [];

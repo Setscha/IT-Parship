@@ -44,7 +44,7 @@ export class AnforderungComponent implements OnInit {
         isEnabled: true
       });*/
 
-      let anf = JSON.parse(JSON.stringify(this.anforderung));
+      let anf = new Anforderung(this.anforderung);
 
       this.kompetenzPool.subscribe(res=> {
         res.entities.forEach(k => {

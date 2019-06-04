@@ -4,7 +4,7 @@ import org.glassfish.jersey.internal.guava.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +40,7 @@ public class Match {
 
     @RequestMapping(path = "/match", method = RequestMethod.GET)
     @PreAuthorize("hasAnyRole('LEHRER')")
+    @Transactional
     public boolean matchStudents() {
         students = new ArrayList<>();
         projektplatzid = 0;
