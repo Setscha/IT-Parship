@@ -1,6 +1,10 @@
-<div class="projekt-liste">
-  <app-lehrer-projekt class="lehrer-projekt" *ngFor="let p of projekte"
-                      [projekt]="p"
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>
+
+<div class="projekt-liste" *ngIf="projekte | async as projects;else loading">
+  <app-lehrer-projekt class="lehrer-projekt" *ngFor="let p of projects['entities']"
+                      [projekt]="p" [kompetenzPool]="kompetenzPool"
                       (editProjektOutput)="editProjekt($event)" (deleteProjektOutput)="deleteProjekt($event)">
   </app-lehrer-projekt>
   <button mat-icon-button (click)="addProjekt()" class="btn-addprojekt"

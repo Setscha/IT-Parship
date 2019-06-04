@@ -2,6 +2,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {EditProjektDialogComponent} from '../edit-projekt-dialog/edit-projekt-dialog.component';
 import {DeleteProjektDialogComponent} from '../delete-projekt-dialog/delete-projekt-dialog.component';
+import {Projekt} from "../../../models/projekt";
+import {RestService} from "../../../services/rest.service";
+import {Anforderung} from "../../../models/anforderung";
 
 @Component({
   selector: 'app-lehrer-projekt',
@@ -11,7 +14,10 @@ import {DeleteProjektDialogComponent} from '../delete-projekt-dialog/delete-proj
 export class LehrerProjektComponent implements OnInit {
 
   @Input()
-  projekt: any;
+  projekt: Projekt;
+
+  @Input()
+  kompetenzPool: any;
 
   @Output()
   editProjektOutput = new EventEmitter<any>();
@@ -26,15 +32,12 @@ export class LehrerProjektComponent implements OnInit {
    * NOCHT NICHT !!! kompetenzPool wird in Oninit Methode gefiltert, dass nur Kompetenzen im Anforderung-Select ausgwählt werden können, die noch keine Anforderung sind
    **/
 
-   kompetenzPool = [
+  /* kompetenzPool = [
     new Kompetenz('Programmieren'),
-    new Kompetenz('Schneiden'),
-    new Kompetenz('Filmen'),
-    new Kompetenz('Fotografieren'),
     new Kompetenz('Audio'),
-    new Kompetenz('Schneuzen'),
-    new Kompetenz('Webdev')
-  ];
+    new Kompetenz('Raspberry'),
+    new Kompetenz('Video')
+  ];*/
 
   editProjekt = () => {
     this.openDialog();
@@ -56,45 +59,46 @@ export class LehrerProjektComponent implements OnInit {
       if (typeof result !== 'undefined') {
         if (result.delete === true) {
           this.openSnackBar('Projekt gelöscht!');
-          this.deleteProjektOutput.emit({id: this.projekt.id});
+          this.deleteProjektOutput.emit({projekt: this.projekt});
         }
       }
     });
   }
 
   addAnforderung = () => {
-    const anforerungenLength = this.projekt.anforderungen.length;
-    if (anforerungenLength === 0) {
-      this.projekt.anforderungen.push(new Anforderung(0, '', null, false));
-      return;
-    }
-    if (this.projekt.anforderungen[anforerungenLength - 1].name !== '') {
-      this.projekt.anforderungen.push(new Anforderung(this.projekt.anforderungen[anforerungenLength - 1].id + 1, '', null, false));
-      console.log(this.projekt.anforderungen[anforerungenLength - 1]);
-    }
+
+
+    this.projekt.anforderungen.push(new Anforderung({}));
   }
 
   changeAnforderung = (a) => {
     // Anforderungen können von der Anforderungs Komponente nur geändert werden weil sie in dieser Komponente geadded werden
     // Da muss jetzt die Anforderung in der Datenbank geändert werden, dann bleibt alles gespeichert weils be jedem reload neu aus DB ausgelesen wird
+    /*
     console.log(a.id);
 
-    for (let i = 0; i < this.projekt.anforderungen.length - 1; i++) {
+    for (let i = 0; i < this.nAnforderungen - 1; i++) {
       if (this.projekt.anforderungen[i].id === a.id) {
         this.projekt.anforderungen[i] = new Anforderung(a.id, a.name, a.prio, a.isDisabled);
       }
     }
-
-  }
+    */
+  };
 
   deleteAnforderung = (a) => {
-    this.projekt.anforderungen = this.projekt.anforderungen.filter(x => x.id !== a.id);
-    if (this.projekt.anforderungen.length === 0) {
-      this.addAnforderung();
-    }
-  }
+    console.log(a.anforderung);
+    this.rest.loeschen(a.anforderung).subscribe(() => {
+      //this.ngOnInit();
+    });
 
-  constructor(private snackBar: MatSnackBar, public dialog: MatDialog) { }
+    /*
+    this.projekt.anforderungen = this.projekt.anforderungen.filter(x => x.id !== a.id);
+    if (this.nAnforderungen === 0) {
+      this.addAnforderung();
+    }*/
+  };
+
+  constructor(private snackBar: MatSnackBar, public dialog: MatDialog, private rest: RestService) { }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(EditProjektDialogComponent, {
@@ -110,13 +114,12 @@ export class LehrerProjektComponent implements OnInit {
       console.log('The dialog was closed');
       console.log(result);
       if (typeof result !== 'undefined') {
-        if (this.projekt.name !== result.name || this.projekt.beschreibung !== result.description || this.projekt.maxSchueler !== result.maxSchueler) {
-          this.openSnackBar('Projekt aktualisiert!');
-          this.projekt.name = result.name;
-          this.projekt.beschreibung = result.description;
-          this.projekt.maxSchueler = result.maxSchueler;
-          this.editProjektOutput.emit({name: this.projekt.name, description: this.projekt.beschreibung, maxSchueler: this.projekt.maxSchueler});
-        }
+        this.projekt.name = result.name;
+        this.projekt.beschreibung = result.beschreibung;
+        this.projekt.maxSchueler = result.maxSchueler;
+        this.rest.speichern(this.projekt).subscribe(() => {
+          this.ngOnInit();
+        });
       }
     });
   }
@@ -129,34 +132,20 @@ export class LehrerProjektComponent implements OnInit {
 
   ngOnInit() {
 
-    this.nAnforderungen = this.projekt.anforderungen.length;
+    this.nAnforderungen = this.projekt.anforderungen ? this.projekt.anforderungen.length : 0;
 
     if (this.nAnforderungen === 0) {
       this.addAnforderung();
     }
 
+    /*this.kompetenzPool = this.rest.seiteLaden(
+      Kompetenz,
+      0,
+      undefined,
+      undefined
+    );*/
+
   }
 
 }
 
-class Anforderung {
-  id: number;
-  name: string;
-  prio: number;
-  isDisabled: boolean;
-
-  constructor(id: number, name: string, prio: number, isDisabled: boolean) {
-    this.id = id;
-    this.name = name;
-    this.prio = prio;
-    this.isDisabled = isDisabled;
-  }
-}
-
-class Kompetenz {
-  name: string;
-
-  constructor(name: string) {
-    this.name = name;
-  }
-}

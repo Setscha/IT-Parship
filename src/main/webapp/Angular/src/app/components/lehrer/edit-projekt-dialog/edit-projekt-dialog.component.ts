@@ -23,7 +23,7 @@ export class EditProjektDialogComponent implements OnInit {
   save() {
     // Save new Title or Description
     if (this.name.length > 3 && this.description.length > 3 && this.maxSchueler > 1) {
-      this.dialogRef.close({name: this.name, description: this.description, maxSchueler: this.maxSchueler});
+      this.dialogRef.close({name: this.name, beschreibung: this.description, maxSchueler: this.maxSchueler});
     }
   }
 
