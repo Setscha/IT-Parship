@@ -17,7 +17,7 @@
           matTooltip="Abbrechen" [matTooltipShowDelay]="500" matTooltipPosition='left'>
     <mat-icon>cancel</mat-icon>
   </button>
-  <button mat-icon-button (click)="deleteKompetenz(kompetenz)" class="mat-warn"
+  <button mat-icon-button (click)="deleteKompetenz()" class="mat-warn"
           [matTooltip]="kompetenz.inUse ? 'Kompetenz kann nicht gelöscht werden, da sie in Verwendung ist' : 'Kompetenz löschen'"
           [matTooltipShowDelay]="500" matTooltipPosition='left' [disabled]="kompetenz.inUse">
     <mat-icon>delete</mat-icon>

@@ -3,11 +3,11 @@
                [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                [mode]="(isHandset$ | async) ? 'over' : 'side'"
                [opened]="!(isHandset$ | async)">
-    <mat-toolbar>Navigation</mat-toolbar>
+    <mat-toolbar><img src="../../../../assets/logo.svg" width="45px" style="margin-right: 10px;"> IT-Parship </mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/kompetenzenSchueler" routerLinkActive="active-list-item">Meine Kompetenzen</a>
+      <a mat-list-item routerLink="/qualifikationen" routerLinkActive="active-list-item">Meine Qualifikationen</a>
       <a mat-list-item routerLink="/projekteSchueler" routerLinkActive="active-list-item">Projekte</a>
-      <a mat-list-item routerLink="/settingsSchueler" routerLinkActive="active-list-item">Settings</a>
+      <!--<a mat-list-item routerLink="/settingsSchueler" routerLinkActive="active-list-item">Settings</a>-->
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -20,7 +20,11 @@
               *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>IT-Parship -- Schüler</span>
+      <span style="flex: auto;">Schüler</span>
+      <span style="margin-right: 10px; font-size: 0.85em;">{{user.displayName}}</span>
+      <button mat-icon-button (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

@@ -1,6 +1,7 @@
 package server.models;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -9,10 +10,10 @@ public class Anforderung extends Persistent {
     private int ausmass;
 
     @ManyToOne
-    @JoinColumn(name="qualifikationen")
+    @JoinColumn(name="projekt")
     private Projekt projekt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Kompetenz kompetenz;
 
     public int getAusmass() {
@@ -27,15 +28,17 @@ public class Anforderung extends Persistent {
         return projekt;
     }
 
-    public void setProjekt(Projekt projekt) {
-        this.projekt = projekt;
-    }
-
     public Kompetenz getKompetenz() {
         return kompetenz;
     }
 
     public void setKompetenz(Kompetenz kompetenz) {
         this.kompetenz = kompetenz;
+    }
+    /**
+     * Aktualisiert beide Seiten der @ManyToOne-Beziehung.
+     */
+    public void setProjekt(Projekt projekt) {
+        this.projekt = setManyToOne(projekt, Projekt::getAnforderungen, Anforderung::getProjekt);
     }
 }

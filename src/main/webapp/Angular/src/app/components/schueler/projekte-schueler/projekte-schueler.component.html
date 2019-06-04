@@ -1,12 +1,8 @@
-<div (click)="insert()">
-  insert
-</div>
 <div class="container" *ngIf="projekte | async as projects; else loading">
   <mat-card *ngFor="let projekt of projects['entities']" class="mat-elevation-z3">
     <mat-card-title>{{projekt.name}}</mat-card-title>
     <mat-card-subtitle>{{projekt.maxSchueler}} Schüler</mat-card-subtitle>
     <mat-card-content>{{projekt.beschreibung}}</mat-card-content>
-    <button mat-raised-button (click)="del(projekt);">Delete</button>
   </mat-card>
 </div>
 <ng-template #loading >

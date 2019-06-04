@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { CookieService } from "ngx-cookie-service";
+import {catchError, finalize, map} from "rxjs/internal/operators";
+import {Observable, of} from "rxjs/index";
+import {isObject} from "rxjs/internal/util/isObject";
+import {isArray} from "rxjs/internal/util/isArray";
 
 @Injectable({
   providedIn: 'root'
@@ -21,19 +25,48 @@ export class AuthService {
    * Entity der angemeldeten Benutzerin, oder undefined, wenn niemand angemeldet ist.
    */
   private user;
-  /*user() {
+
+  getUser() {
     return this.user
-  };*/
+  };
+
+  refreshUser() {
+    return this.http
+      .get("http://localhost:8081/api/me",  this.OPTIONS)
+      .pipe(map(v => {
+        this.user = v;
+      }));
+  }
+
+  embeddedAufloesen(obj) {
+    let embedded;
+
+    if (isArray(obj)) {
+      // Arrayelemente umstrukturieren
+      obj.forEach(e => this.embeddedAufloesen(e));
+
+    } else if (isObject(obj) && (embedded = obj['_embedded'])) {
+      // Inhalte von _embedded in diesem Objekt platzieren
+      Object.keys(embedded).forEach(k => {
+        obj[k] = embedded[k];
+        this.embeddedAufloesen(obj[k]);
+      });
+      delete obj['_embedded'];
+    }
+
+    return obj;
+  }
 
   /**
    * Setzt die Authentifizierungsdaten für einen Benutzer oder löscht sie,
    * wenn kein Argumente angegeben sind.
    */
   authentifizieren(user_, token) {
+    user_ = this.embeddedAufloesen(user_);
     this.user = user_;
     this.OPTIONS = {
       headers: new HttpHeaders({
-        TOKEN_HEADER: token
+        [this.TOKEN_HEADER]: token
       })
     };
   };
@@ -69,18 +102,17 @@ export class AuthService {
   logout() {
     return this.http
       .post(this.LOGOUT, {})
-      .toPromise()
-      .then(response => {
-        //$log.debug("AuthService.logout(): OK");
-        return Promise.resolve(response);
-      })
-      .catch(response => {
-        //$log.error("AuthService.logout(): Fehler", response);
-        return Promise.reject(response);
-      })
-      .finally(() => {
-        this.authentifizieren(undefined, undefined);
-      });
+      .pipe(
+        catchError(() => {
+          return of(null);
+        }),
+        map(() => {
+          return of(true);
+        }),
+        finalize(() => {
+          this.authentifizieren(undefined, undefined);
+        })
+      );
   };
 
 
@@ -91,38 +123,28 @@ export class AuthService {
    * Wenn ein Session-Cookie vorhanden ist, wird vorher versucht, sich damit
    * zu authentifizieren.
    */
-  istAngemeldet() {
+  istAngemeldet(): Observable<any> {
     if (this.user) {
-      //$log.debug("AuthService.istAngemeldet(), user:", user);
-      return Promise.resolve(this.user);
-
+      return of(this.user);
     } else {
       let token = this.cookies.get(this.SESSION_COOKIE);
 
       if (token) {
-        //$log.debug("AuthService.istAngemeldet(), token:", token);
-
         this.authentifizieren(undefined, token);
         return this.http
-          .get(this.ME)
-          .toPromise()
-          .then(response => {
-            //$log.debug("AuthService.istAngemeldet(), user:", response.data);
-
-            this.authentifizieren(response['data'], token);
-            return Promise.resolve(this.user);
-          })
-          .catch(() => {
-            //$log.debug("AuthService.istAngemeldet(), kein user");
-
-            this.authentifizieren(undefined, undefined);
-            return Promise.reject();
-          });
+          .get(this.ME, this.OPTIONS)
+          .pipe(
+            catchError((e => {
+              this.authentifizieren(undefined, undefined);
+              return of(null);
+          })),
+            map(response => {
+              this.authentifizieren(response, token);
+              return this.user;
+          }));
 
       } else {
-        //$log.debug("AuthService.istAngemeldet(), kein user");
-
-        return Promise.reject();
+        return of(null);
       }
     }
   };

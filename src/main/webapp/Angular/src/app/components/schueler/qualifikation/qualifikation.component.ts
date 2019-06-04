@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { NgModule } from '@angular/core';
+import {Qualifikation} from "../../../models/qualifikation";
 
 @Component({
   selector: 'app-qualifikation',
@@ -9,7 +9,7 @@ import { NgModule } from '@angular/core';
 export class QualifikationComponent implements OnInit {
 
   @Input()
-  qualifikation: any;
+  qualifikation: Qualifikation;
 
   constructor() { }
 

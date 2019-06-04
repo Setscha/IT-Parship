@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from "../../../services/rest.service";
 import { Projekt } from "../../../models/projekt";
-import {map} from "rxjs/internal/operators";
 
 @Component({
   selector: 'app-projekte-schueler',
@@ -21,25 +20,6 @@ export class ProjekteSchuelerComponent implements OnInit {
       undefined,
       undefined
     );
-  }
-
-  del(projekt) {
-    this.rest.loeschen(projekt).subscribe(() => {
-      this.ngOnInit();
-    });
-  }
-
-  insert() {
-    this.rest.speichern(new Projekt({
-      beschreibung: 'Test',
-      maxSchueler: 2,
-      name: 'T',
-      anforderungen: [],
-      _links: [],
-      etag: 0,
-    })).subscribe(() => {
-      this.ngOnInit();
-    });
   }
 
 }

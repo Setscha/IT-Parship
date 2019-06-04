@@ -1,7 +1,7 @@
 package server.models;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -10,19 +10,11 @@ public class Kompetenz extends Persistent {
 
     private String beschreibung;
 
-    @OneToMany(mappedBy = "kompetenz")
+    @OneToMany(mappedBy = "kompetenz", fetch = FetchType.EAGER)
     private Set<Qualifikation> qualifikationen;
 
-    @OneToMany(mappedBy = "kompetenz")
+    @OneToMany(mappedBy = "kompetenz", fetch = FetchType.EAGER)
     private Set<Anforderung> anforderungen;
-
-    public Set<Qualifikation> getQualifikationen() {
-        return qualifikationen;
-    }
-
-    public void setQualifikationen(Set<Qualifikation> qualifikationen) {
-        this.qualifikationen = qualifikationen;
-    }
 
     public String getBeschreibung() {
         return beschreibung;
@@ -32,11 +24,26 @@ public class Kompetenz extends Persistent {
         this.beschreibung = beschreibung;
     }
 
+
+    public Set<Qualifikation> getQualifikationen() {
+        return qualifikationen;
+    }
+
     public Set<Anforderung> getAnforderungen() {
         return anforderungen;
     }
 
+    /**
+     * Aktualisiert beide Seiten der @OneToMany-Beziehung.
+     */
+    public void setQualifikationen(Set<Qualifikation> qualifikationen) {
+        this.qualifikationen = setOneToMany(qualifikationen, Qualifikation::setKompetenz, Kompetenz::getQualifikationen);
+    }
+
+    /**
+     * Aktualisiert beide Seiten der @OneToMany-Beziehung.
+     */
     public void setAnforderungen(Set<Anforderung> anforderungen) {
-        this.anforderungen = anforderungen;
+        this.anforderungen = setOneToMany(anforderungen, Anforderung::setKompetenz, Kompetenz::getAnforderungen);
     }
 }

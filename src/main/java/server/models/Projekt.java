@@ -1,9 +1,8 @@
 package server.models;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,11 +12,20 @@ public class Projekt extends Persistent {
     private String beschreibung;
     private Integer maxSchueler;
 
-    @OneToMany(mappedBy = "projekt")
+    @OneToMany(mappedBy = "projekt", fetch = FetchType.EAGER)
     private Set<Person> personas;
 
-    @OneToMany(mappedBy = "projekt", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "projekt", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Anforderung> anforderungen;
+
+    @PreRemove
+    private void preRemove() {
+        List<Person> toRemove = new ArrayList<>(personas);
+        for(Person p : toRemove){
+            p.setProjekt(null);
+        }
+    }
+
 
     public String getName() {
         return name;
@@ -35,7 +43,7 @@ public class Projekt extends Persistent {
         this.beschreibung = beschreibung;
     }
 
-    public Number getMaxSchueler() {
+    public Integer getMaxSchueler() {
         return maxSchueler;
     }
 
@@ -43,19 +51,29 @@ public class Projekt extends Persistent {
         this.maxSchueler = maxSchueler;
     }
 
+
     public Set<Person> getPersonas() {
         return personas;
     }
 
+
+    /**
+     * Aktualisiert beide Seiten der @OneToMany-Beziehung.
+     */
     public void setPersonas(Set<Person> personas) {
-        this.personas = personas;
+        this.personas = setOneToMany(personas, Person::setProjekt, Projekt::getPersonas);
     }
+
 
     public Set<Anforderung> getAnforderungen() {
         return anforderungen;
     }
 
+
+    /**
+     * Aktualisiert beide Seiten der @OneToMany-Beziehung.
+     */
     public void setAnforderungen(Set<Anforderung> anforderungen) {
-        this.anforderungen = anforderungen;
+        this.anforderungen = setOneToMany(anforderungen, Anforderung::setProjekt, Projekt::getAnforderungen);
     }
 }
